@@ -27,7 +27,7 @@ const data = [
     tags: ['cool', 'teacher'],
   },
 ];
-const App = () => (
+const Ordertable = () => (
   <Table dataSource={data}>
     <ColumnGroup title="Name">
       <Column title="First Name" dataIndex="firstName" key="firstName" />
@@ -67,4 +67,4 @@ const App = () => (
     />
   </Table>
 );
-export default App;
+export default Ordertable;
