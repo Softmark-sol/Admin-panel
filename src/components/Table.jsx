@@ -28,26 +28,43 @@ const data = [
   },
 ];
 const Ordertable = () => (
-  <Table dataSource={data} pagination={false}>
-      <Column title="Order #" dataIndex="order" key="order" />
-      <Column title="Order Type" dataIndex="Ordertype" key="Ordertype" />
-    <Column title="description" dataIndex="description" key="description" />
-    <Column title="Order received date" dataIndex="Orderreceiveddate" key="Orderreceiveddate" />
+  <Table dataSource={data}>
+    <ColumnGroup title="Name">
+      <Column title="First Name" dataIndex="firstName" key="firstName" />
+      <Column title="Last Name" dataIndex="lastName" key="lastName" />
+    </ColumnGroup>
+    <Column title="Age" dataIndex="age" key="age" />
+    <Column title="Address" dataIndex="address" key="address" />
     <Column
-      title="Order received date"
-      dataIndex="Orderreceiveddate"
-      key="Orderreceiveddate"
+      title="Tags"
+      dataIndex="tags"
+      key="tags"
+      render={(tags) => (
+        <>
+          {tags.map((tag) => {
+            let color = tag.length > 5 ? 'geekblue' : 'green';
+            if (tag === 'loser') {
+              color = 'volcano';
+            }
+            return (
+              <Tag color={color} key={tag}>
+                {tag.toUpperCase()}
+              </Tag>
+            );
+          })}
+        </>
+      )}
     />
     <Column
-      title="Requirements"
-      key="Requirements"
-      dataIndex="Requirements"
-          />
-          <Column
-      title="Payment confirmation"
-      key="Paymentconfirmation"
-      dataIndex="Paymentconfirmation"
-          />
+      title="Action"
+      key="action"
+      render={(_, record) => (
+        <Space size="middle">
+          <a>Invite {record.lastName}</a>
+          <a>Delete</a>
+        </Space>
+      )}
+    />
   </Table>
 );
 export default Ordertable;
