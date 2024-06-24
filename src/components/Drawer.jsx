@@ -10,9 +10,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { AiFillHome, AiFillInfoCircle, AiFillPhone } from 'react-icons/ai';
-import { FaServicestack } from 'react-icons/fa';
-import '../css/navbar.css';
+import { IoReceiptSharp } from "react-icons/io5";
+import { FaSearchengin } from "react-icons/fa6";
 
 const LeftDrawer = () => {
   const location = useLocation();
@@ -70,8 +69,8 @@ const LeftDrawer = () => {
     >
       <List>
         {[
-          { text: 'Orders', icon: <AiFillHome color="#4599B4" /> },
-          { text: 'General Inqueries', icon: <FaServicestack color="#4599B4" /> },
+          { text: 'Orders', icon: <IoReceiptSharp color="#4599B4" /> },
+          { text: 'General Inqueries', icon: <FaSearchengin color="#4599B4" /> },
         ].map(({ text, icon }) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
@@ -94,7 +93,7 @@ const LeftDrawer = () => {
 
   return (
     <div>
-      <Button onClick={toggleDrawer('left', true)}><GiHamburgerMenu /></Button>
+      <Button onClick={toggleDrawer('left', true)}><GiHamburgerMenu color='white' size={20}/></Button>
       <Drawer
         anchor='left'
         open={state.left}
