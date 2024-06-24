@@ -1,6 +1,29 @@
+@font-face {
+  font-family: "PoppinsBold";
+  src: url("../assets/fonts/Poppins-Bold.ttf");
+}
 html,body{
   margin: 0;
   padding: 0;
+}
+
+.admin{
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  padding-left: 30px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  border: none;
+}
+
+.admin-span{
+  color: #ffffff;
+    font-size: 1.4vw;
+    padding-left: 15px;
+    font-family: PoppinsBold;
 }
 
 .sidebar {
@@ -9,17 +32,14 @@ html,body{
     width: 20%;
     padding: 0;
     margin: 0;
-    /* position: relative;
-    left: 0; */
   }
   
   .sidebar-main {
-    padding-top: 80px;
-    /* padding-left: 50px; */
+    padding-top: 30px;
   }
   
   .sidebar-content {
-    width: 80%;
+    width: 85%;
     display: flex;
     justify-content: flex-start;
     flex-direction: row;
@@ -34,9 +54,9 @@ html,body{
   
   .sidebar-span {
     color: #c4d7f8;
-    font-size: 1vw;
+    font-size: 1.2vw;
     padding-left: 15px;
-    transition: color 0.3s; /* Add transition for smooth animation */
+    transition: color 0.3s;
   }
   
   .sidebar-content:hover {

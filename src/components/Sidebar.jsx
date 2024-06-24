@@ -1,44 +1,24 @@
 import React from "react";
-import { FiHome } from "react-icons/fi";
+import { IoReceiptSharp } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
-import "../css/Sidebar.css"
+import { FaSearchengin } from "react-icons/fa6";
+import "../css/Sidebar.css";
 
 const Sidebar = () => {
   const navigate = useNavigate();
   return (
     <div className="sidebar">
       <div className="sidebar-main">
-        <div
-          className="sidebar-content"
-          onClick={() => navigate("/")}>
-          <FiHome color="#C4D7F8" size={20} />
-          <span className="sidebar-span">
-            Home
-          </span>
+        <div className="admin">
+          <span className="admin-span">A D M I N &nbsp; P A N E L</span>
         </div>
-        <div
-          className="sidebar-content"
-          onClick={() => navigate("/teachers")}>
-          <FiHome color="#C4D7F8" size={20} />
-          <span className="sidebar-span">
-            Teachers
-          </span>
+        <div className="sidebar-content" onClick={() => navigate("/orders")}>
+          <IoReceiptSharp color="#C4D7F8" size={20} />
+          <span className="sidebar-span">Orders</span>
         </div>
-        <div
-          className="sidebar-content"
-          onClick={() => navigate("/classrooms")}>
-          <FiHome color="#C4D7F8" size={20} />
-          <span className="sidebar-span">
-            Classrooms
-          </span>
-        </div>
-        <div
-          className="sidebar-content"
-          onClick={() => navigate("/scheduling")}>
-          <FiHome color="#C4D7F8" size={20} />
-          <span className="sidebar-span">
-            Scheduling
-          </span>
+        <div className="sidebar-content" onClick={() => navigate("/general-inquery")}>
+          <FaSearchengin color="#C4D7F8" size={20} />
+          <span className="sidebar-span">General Inqueries</span>
         </div>
       </div>
     </div>
