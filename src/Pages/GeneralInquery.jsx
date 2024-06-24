@@ -1,11 +1,11 @@
 import React from 'react'
-import Ordertable from '../components/Table'
+import GeneralTable from '../components/GeneralTable'
 import "../css/General.css"
 
 const GeneralInquery = () => {
   return (
     <div className='general'>
-      <Ordertable />
+      <GeneralTable />
     </div>
   )
 }

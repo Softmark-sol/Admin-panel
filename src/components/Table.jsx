@@ -1,41 +1,53 @@
-import React from "react";
-import { Table } from "antd";
-const { Column } = Table;
-
-// Generate random data for demonstration
-const generateRandomData = () => {
-  const data = [];
-  for (let i = 1; i <= 5; i++) {
-    data.push({
-      key: String(i),
-      srNo: i,
-      name: `Person ${i}`,
-      email: `person${i}@example.com`,
-      number: Math.floor(Math.random() * 10000000000), 
-      companyName: `Company ${i}`,
-      service: `Service ${i}`,
-      notes: `Notes for Person ${i}`,
-      date: new Date().toLocaleDateString(), 
-    });
-  }
-  return data;
-};
-
-const Ordertable = () => {
-  const data = generateRandomData();
-
-  return (
-    <Table dataSource={data} pagination={false}>
-      <Column title="Sr No." dataIndex="srNo" key="srNo" />
-      <Column title="Name" dataIndex="name" key="name" />
-      <Column title="Email" dataIndex="email" key="email" />
-      <Column title="Number" dataIndex="number" key="number" />
-      <Column title="Company Name" dataIndex="companyName" key="companyName" />
-      <Column title="Service" dataIndex="service" key="service" />
-      <Column title="Notes" dataIndex="notes" key="notes" />
-      <Column title="Date" dataIndex="date" key="date" />
-    </Table>
-  );
-};
-
+import React from 'react';
+import { Space, Table, Tag } from 'antd';
+const { Column, ColumnGroup } = Table;
+const data = [
+  {
+    key: '1',
+    firstName: 'John',
+    lastName: 'Brown',
+    age: 32,
+    address: 'New York No. 1 Lake Park',
+    tags: ['nice', 'developer'],
+  },
+  {
+    key: '2',
+    firstName: 'Jim',
+    lastName: 'Green',
+    age: 42,
+    address: 'London No. 1 Lake Park',
+    tags: ['loser'],
+  },
+  {
+    key: '3',
+    firstName: 'Joe',
+    lastName: 'Black',
+    age: 32,
+    address: 'Sydney No. 1 Lake Park',
+    tags: ['cool', 'teacher'],
+  },
+];
+const Ordertable = () => (
+  <Table dataSource={data} pagination={false}>
+      <Column title="Order #" dataIndex="order" key="order" />
+      <Column title="Order Type" dataIndex="Ordertype" key="Ordertype" />
+    <Column title="description" dataIndex="description" key="description" />
+    <Column title="Order received date" dataIndex="Orderreceiveddate" key="Orderreceiveddate" />
+    <Column
+      title="Order received date"
+      dataIndex="Orderreceiveddate"
+      key="Orderreceiveddate"
+    />
+    <Column
+      title="Requirements"
+      key="Requirements"
+      dataIndex="Requirements"
+          />
+          <Column
+      title="Payment confirmation"
+      key="Paymentconfirmation"
+      dataIndex="Paymentconfirmation"
+          />
+  </Table>
+);
 export default Ordertable;
