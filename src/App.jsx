@@ -1,15 +1,11 @@
 import React from "react";
-import LoginForm from "./components/Login";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Router from "./config/Router";
+
 
 const App = () => {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<LoginForm />} />
-        </Routes>
-      </BrowserRouter>
+     <Router />
     </>
   );
 };
