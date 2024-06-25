@@ -12,7 +12,7 @@ const Sidebar = () => {
         <div className="admin">
           <span className="admin-span">A D M I N &nbsp; P A N E L</span>
         </div>
-        <div className="sidebar-content" onClick={() => navigate("/orders")}>
+        <div className="sidebar-content" onClick={() => navigate("/")}>
           <IoReceiptSharp color="#C4D7F8" size={20} />
           <span className="sidebar-span">Orders</span>
         </div>

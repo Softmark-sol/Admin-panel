@@ -16,7 +16,7 @@ const Dashboard = () => {
         </div>
         <div className="right">
         <Routes>
-          <Route path="/orders" element={<Orders />} />
+          <Route path="/" element={<Orders />} />
           <Route path="/general-inquery" element={<GeneralInquery />} />
         </Routes></div>
       </div>
