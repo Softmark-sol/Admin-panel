@@ -4,4 +4,10 @@
 .responsive {
     overflow-x: auto;
     white-space: nowrap;
+    overflow-y: scroll;
+    height: 88vh;
   }
+
+  /* body, html{
+    overflow-x: auto;
+  } */
