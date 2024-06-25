@@ -1,3 +1,7 @@
 .orders{
     width: 100%;
 }
+.responsive {
+    overflow-x: auto;
+    white-space: nowrap;
+  }

@@ -1,6 +1,7 @@
 import React from "react";
 import { Table } from "antd";
 const { Column } = Table;
+import '../css/General.css'
 
 // Generate random data for demonstration
 const generateRandomData = () => {
@@ -25,7 +26,8 @@ const Ordertable = () => {
   const data = generateRandomData();
 
   return (
-    <Table dataSource={data} pagination={false}>
+    <div className="responsive">
+      <Table dataSource={data} pagination={false} >
       <Column title="Sr No." dataIndex="srNo" key="srNo" />
       <Column title="Name" dataIndex="name" key="name" />
       <Column title="Email" dataIndex="email" key="email" />
@@ -35,6 +37,8 @@ const Ordertable = () => {
       <Column title="Notes" dataIndex="notes" key="notes" />
       <Column title="Date" dataIndex="date" key="date" />
     </Table>
+    </div>
+    
   );
 };
 
