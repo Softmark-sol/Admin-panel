@@ -11,11 +11,14 @@ const Dashboard = () => {
     <div>
       <Navbar />
       <div className="main-cont">
+        <div className="left">
         <Sidebar />
+        </div>
+        <div className="right">
         <Routes>
           <Route path="/orders" element={<Orders />} />
           <Route path="/general-inquery" element={<GeneralInquery />} />
-        </Routes>
+        </Routes></div>
       </div>
     </div>
   );

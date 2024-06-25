@@ -2,7 +2,7 @@ import API_CONFIG from "./api";
 
 export async function adminLogin(username, password) {
     try {
-        const res = await fetch(`https://8786-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/admin-auth`, {
+        const res = await fetch(`http://localhost:4000/admin-auth`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

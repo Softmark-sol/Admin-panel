@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../css/Login.css"
-import { adminLogin } from '../config/LoginApi';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -12,10 +12,11 @@ const LoginForm = () => {
         e.preventDefault(); 
         
         try {
-            const res = await adminLogin({ username, password });
-            console.log(res);
-            if (res) {
-                localStorage.setItem('token', res.token);
+            // Use Axios for API request
+            const res = await axios.post('http://localhost:4000/admin-auth', { username, password });
+            console.log(res.data);
+            if (res.data) {
+                localStorage.setItem('token', res.data.token);
                 alert('Login Successful');
                 navigate('/');
             } else {
