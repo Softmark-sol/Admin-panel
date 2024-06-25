@@ -1,5 +1,5 @@
 const API_CONFIG = {
-    apiKey: `https://a642-2400-adc1-1c7-5400-a0cb-1a7f-78e8-bf55.ngrok-free.app`,
+    apiKey: `https://8786-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app`,
   };
   
   export default API_CONFIG;
