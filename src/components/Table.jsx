@@ -1,7 +1,7 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
 const { Column } = Table;
-import '../css/Order.css'
+import '../css/Orders.css'
 
 
 const Ordertable = () => (
