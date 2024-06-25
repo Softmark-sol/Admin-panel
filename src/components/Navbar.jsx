@@ -1,8 +1,39 @@
 import React from "react";
 import "../css/Navbar.css";
 import LeftDrawer from "./Drawer";
+import axios from "axios"; 
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      };
+
+      const response = await axios.post("http://localhost:4000/logout", {}, config);
+      
+      console.log("Logout successful:", response.data);
+
+      localStorage.removeItem("token");
+
+      // Navigate to login page
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <div className="main-section">
       <div className="navbar container">
@@ -10,8 +41,8 @@ const Navbar = () => {
           <h4 className="navbar-h underline">Softmark Solutions</h4>
         </div>
         <div className="btn-container">
-          {/* <button>Logout</button> */}
-          <button>
+          {/* Logout button with onClick handler */}
+          <button onClick={handleLogout}>
             <svg
               height={16}
               width={16}
@@ -24,7 +55,7 @@ const Navbar = () => {
             <span>Logout</span>
           </button>
         </div>
-          <div className="navbar-menu">
+        <div className="navbar-menu">
           <LeftDrawer />
         </div>
       </div>

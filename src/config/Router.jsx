@@ -15,6 +15,8 @@ const Router = () => {
 
           {/* Dashboard Route */}
           <Route path="/*" element={<Dashboard />} />
+
+                    {/* Check Email Page */}
           <Route path="/checkemail" element={<Emailbox />} />
 
           {/* 404 Route */}
