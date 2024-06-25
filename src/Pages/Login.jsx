@@ -10,12 +10,13 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
+
+        console.log(username,password)
         
         try {
-            // Use Axios for API request
-            const res = await axios.post('http://localhost:4000/admin-auth', { username, password });
-            console.log(res.data);
-            if (res.data) {
+            const res = await axios.post('https://8786-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/admin-auth', { username, password });
+            console.log(res);
+            if (res) {
                 localStorage.setItem('token', res.data.token);
                 alert('Login Successful');
                 navigate('/');
