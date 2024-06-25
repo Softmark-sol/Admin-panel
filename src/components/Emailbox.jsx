@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import '../css/login.css'
 
 const Emailbox = () => {
 
@@ -9,7 +10,7 @@ const Emailbox = () => {
     <div>
       <div className="form">
             <form className="form_main" onSubmit={handleSubmit}>
-                <p className="heading">Login</p>
+                <p className="heading">Admin Email</p>
 
                 <div className="inputContainer">
                     <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2e2e2e" viewBox="0 0 16 16">
