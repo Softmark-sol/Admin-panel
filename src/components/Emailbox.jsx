@@ -1,19 +1,46 @@
 import React, { useState } from 'react'
 import '../css/Login.css'
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 const Emailbox = () => {
 
         const [userEmail,setUserEmail]=useState('')
+        const navigate = useNavigate();
 
-        const handleSubmit=(e)=>{
+        const handleSubmit = async (e) => {
             e.preventDefault();
-        }
+        
+            console.log(userEmail);
+        
+            try {
+              const res = await axios.post(
+                "https://aaee-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/forgot-password",
+                { userEmail}
+              );
+              if (res) {
+                    navigate("/");
+              } 
+              else {
+                console.log("Invalid Email.")
+              }
+        
+            } catch (error) {
+              console.error("Login Error:", error.message);
+              Swal.fire({
+                icon: "error",
+                title: "Try Again",
+                text: "Invalid Email.!",
+              });
+            }
+          };
 
   return (
     <div>
       <div className="form">
             <form className="form_main" onSubmit={handleSubmit}>
-                <p className="heading">Enter your Email</p>
+                <p className="heading">Admin Email</p>
 
                 <div className="inputContainer">
                     <svg className="inputIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2e2e2e" viewBox="0 0 16 16">
@@ -23,7 +50,7 @@ const Emailbox = () => {
                         type="email"
                         className="inputField"
                         id="email"
-                        placeholder="Email"
+                        placeholder="Enter your Email"
                         value={userEmail}
                         onChange={(e) => setUserEmail(e.target.value)}
                         required
