@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import "../css/Login.css"
-import { adminLogin } from '../config/LoginApi';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const LoginForm = () => {
     const [username, setUsername] = useState('');
@@ -10,12 +10,14 @@ const LoginForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault(); 
+
+        console.log(username,password)
         
         try {
-            const res = await adminLogin({ username, password });
+            const res = await axios.post('https://8786-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/admin-auth', { username, password });
             console.log(res);
             if (res) {
-                localStorage.setItem('token', res.token);
+                localStorage.setItem('token', res.data.token);
                 alert('Login Successful');
                 navigate('/');
             } else {
