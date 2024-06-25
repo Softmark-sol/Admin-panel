@@ -7,7 +7,7 @@ const Navbar = () => {
     <div className="main-section">
       <div className="navbar container">
         <div>
-          <h4 className="navbar-h">Softmark Solutions</h4>
+          <h4 className="navbar-h underline">Softmark Solutions</h4>
         </div>
         <div className="btn-container">
           {/* <button>Logout</button> */}
