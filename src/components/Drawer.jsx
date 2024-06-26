@@ -33,27 +33,14 @@ const LeftDrawer = () => {
     setState({ ...state, [anchor]: open });
   };
 
-  const Contact = () => {
-    const isHomePage = location.pathname === "/";
-    if (isHomePage) {
-      const contactForm = document.getElementById("form");
-      console.log(contactForm);
-
-      if (contactForm) {
-        contactForm.scrollIntoView({ behavior: "smooth" });
-      }
-    } else {
-      navigate("/contactUs");
-    }
-  };
 
   const handleNavigation = (text) => {
     switch (text) {
       case 'Orders':
-        navigate('/orders');
+        navigate('/');
         break;
       case 'General Inqueries':
-        navigate('/general-inqueries');
+        navigate('/general-inquery');
         break;
       default:
         break;
