@@ -84,6 +84,3 @@ const Emailbox = () => {
 };
 
 export default Emailbox;
-
-
-

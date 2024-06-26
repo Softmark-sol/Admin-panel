@@ -1,11 +1,11 @@
 .form_main {
-  width: 350px;
+  width: 380px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   background-color: rgb(255, 255, 255);
-  padding: 50px 30px 50px 30px;
+  padding: 50px 50px 50px 50px;
   box-shadow: 4px 4px 40px rgba(154, 154, 154, 0.897) ;
   position: relative;
   overflow: hidden;

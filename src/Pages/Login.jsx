@@ -52,7 +52,7 @@ const LoginForm = () => {
         onLoaderFinished={() => setProgress(0)}
       />
       <form className="form_main" onSubmit={handleSubmit}>
-        <p className="heading">Login</p>
+        <p className="heading">Admin Login</p>
 
         <div className="inputContainer">
           <svg
