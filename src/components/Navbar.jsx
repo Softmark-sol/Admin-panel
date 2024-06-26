@@ -2,10 +2,8 @@ import React from "react";
 import "../css/Navbar.css";
 import LeftDrawer from "./Drawer";
 import axios from "axios"; 
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
