@@ -28,6 +28,14 @@ const Ordertable = () => {
     fetchData();
   }, []);
 
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    const year = date.getFullYear();
+    const month = ("0" + (date.getMonth() + 1)).slice(-2);
+    const day = ("0" + date.getDate()).slice(-2);
+    return `${year}-${month}-${day}`;
+  };
+
   return (
     <div className="responsive">
       <Table dataSource={data} pagination={false}>
@@ -36,10 +44,9 @@ const Ordertable = () => {
         <Column title="Email" dataIndex="email" key="email" />
         <Column title="Number" dataIndex="phone" key="phone" />
         <Column title="Company Name" dataIndex="company" key="company" />
-        <Column title="Service" dataIndex="serviceType" key="serviceType" />
         <Column title="Notes" dataIndex="message" key="message" />
         <Column title="Service Type" dataIndex="serviceType" key="serviceType" />
-        <Column title="Date" dataIndex="updated_at" key="updated_at" />
+        <Column title="Date" dataIndex="updated_at" key="updated_at" render={(text) => formatDate(text)}/>
       </Table>
     </div>
   );
