@@ -5,6 +5,7 @@ import { Routes, Route } from "react-router-dom";
 import "../css/Dashboard.css";
 import Orders from "./Orders";
 import GeneralInquery from "./GeneralInquery";
+import NotFound from "../components/NotFound/NotFound";
 
 const Dashboard = () => {
   return (
@@ -12,13 +13,17 @@ const Dashboard = () => {
       <Navbar />
       <div className="main-cont">
         <div className="left">
-        <Sidebar />
+          <Sidebar />
         </div>
         <div className="right">
-        <Routes>
-          <Route path="/" element={<Orders />} />
-          <Route path="/general-inquery" element={<GeneralInquery />} />
-        </Routes></div>
+          <Routes>
+            <Route path="/" element={<Orders />} />
+            <Route path="/general-inquery" element={<GeneralInquery />} />
+
+            {/* 404 Route */}
+            {/* <Route path="*" element={<NotFound />} /> */}
+          </Routes>
+        </div>
       </div>
     </div>
   );
