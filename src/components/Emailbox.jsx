@@ -1,51 +1,62 @@
-import React, { useState } from 'react';
-import '../css/Login.css';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-import Swal from 'sweetalert2';
+import React, { useState } from "react";
+import "../css/Login.css";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Swal from "sweetalert2";
+import LoadingBar from "react-top-loading-bar";
 
 const Emailbox = () => {
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState("");
+  const [progress, setProgress] = useState(0);
+
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-  
+    setProgress(50);
+
     try {
       const res = await axios.post(
         "https://aaee-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/forgot-password",
         { email: userEmail }
       );
 
-  
-      if (res.status === 400) { 
+      if (res.status === 400) {
         Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Invalid Email!',
+          icon: "error",
+          title: "Error",
+          text: "Invalid Email!",
         });
       } else {
         Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Email sent successfully!',
+          icon: "success",
+          title: "Success",
+          text: "Email sent successfully!",
         });
-        navigate('/otpform');
+        setProgress(100);
+
+        setTimeout(() => {
+          navigate("/otpform");
+        }, 200);
       }
     } catch (error) {
-      console.error('Login Error:', error.message);
+      console.error("Login Error:", error.message);
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'enter correct email.',
+        icon: "error",
+        title: "Error",
+        text: "enter correct email.",
       });
     }
+    setProgress(100);
   };
-  
 
   return (
     <div>
+      <LoadingBar
+        color="#4599B4"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+      />
       <div className="form">
         <form className="form_main" onSubmit={handleSubmit}>
           <p className="heading">Admin Email</p>
