@@ -10,9 +10,6 @@ const Protected = (props) => {
     if (!token || token == NaN || token.length != 6) {
       navigate("/login");
     } 
-    else{
-        navigate("/");
-    }
   }, []);
 
   return (
