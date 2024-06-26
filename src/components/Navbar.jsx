@@ -2,10 +2,8 @@ import React from "react";
 import "../css/Navbar.css";
 import LeftDrawer from "./Drawer";
 import axios from "axios"; 
-import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
-  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -28,7 +26,7 @@ const Navbar = () => {
       localStorage.removeItem("token");
 
       // Navigate to login page
-      navigate("/login");
+      window.location.reload()
     } catch (error) {
       console.error("Logout error:", error);
     }
