@@ -11,7 +11,6 @@ const Emailbox = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
   
-    console.log(userEmail);
   
     try {
       const res = await axios.post(
@@ -19,7 +18,6 @@ const Emailbox = () => {
         { email: userEmail }
       );
 
-      console.log(res)
   
       if (res.status === 400) { 
         Swal.fire({
@@ -40,7 +38,7 @@ const Emailbox = () => {
       Swal.fire({
         icon: 'error',
         title: 'Error',
-        text: 'Something went wrong. Please try again later.',
+        text: 'enter correct email.',
       });
     }
   };
