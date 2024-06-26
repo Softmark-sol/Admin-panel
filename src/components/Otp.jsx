@@ -181,7 +181,7 @@ export default function OTPInput() {
           separator={<span>-</span>}
           value={otp}
           onChange={setOtp}
-          length={4}
+          length={6}
           onSendOTP={checkotp}
         />
         <span>Entered value: {otp}</span>

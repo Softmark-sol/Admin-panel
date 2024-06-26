@@ -16,22 +16,24 @@ const Emailbox = () => {
     try {
       const res = await axios.post(
         "https://aaee-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/forgot-password",
-        { userEmail }
+        { email: userEmail }
       );
+
+      console.log(res)
   
-      if (res) { 
+      if (res.status === 400) { 
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Invalid Email!',
+        });
+      } else {
         Swal.fire({
           icon: 'success',
           title: 'Success',
           text: 'Email sent successfully!',
         });
         navigate('/otpform');
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: 'Invalid Email!',
-        });
       }
     } catch (error) {
       console.error('Login Error:', error.message);
@@ -82,6 +84,3 @@ const Emailbox = () => {
 };
 
 export default Emailbox;
-
-
-

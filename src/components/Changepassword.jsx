@@ -37,7 +37,7 @@ const Changepassword = () => {
               type="password"
               className="inputField"
               id="password"
-              placeholder="Enter Confirm Password"
+              placeholder="Confirm New Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
