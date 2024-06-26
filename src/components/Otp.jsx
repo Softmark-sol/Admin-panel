@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { Input as BaseInput } from '@mui/base/Input';
 import { Box, styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 function OTP({ separator, length, value, onChange, onSendOTP }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
@@ -163,8 +165,37 @@ export default function OTPInput() {
   const [otp, setOtp] = React.useState('');
   const navigate = useNavigate();
 
-  const checkotp = () => {
-    navigate('/changepassword');
+  const checkotp = async () => {
+    try {
+      const res = await axios.post(
+        "https://aaee-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/verify-reset-code",
+        { code: otp }
+      );
+
+      console.log(res);
+
+      if (res.status === 200) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'OTP verified successfully!',
+        });
+        navigate('/changepassword');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Invalid OTP!',
+        });
+      }
+    } catch (error) {
+      console.error('Login Error:', error.message);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Something went wrong. Please try again later.',
+      });
+    }
   };
 
   return (
@@ -186,12 +217,12 @@ export default function OTPInput() {
         />
         <span>Entered value: {otp}</span>
         <div style={{ textAlign: 'center' }}>
-          <button
-            style={{ backgroundColor: '#74bed7', border: 'none', padding: '10px 16px' }}
+          <span
+            style={{ backgroundColor: '#74bed7', border: 'none', padding: '10px 16px',cursor:'pointer' }}
             onClick={checkotp}
           >
             Send OTP
-          </button>
+          </span>
         </div>
       </Box>
     </>
