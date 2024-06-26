@@ -25,7 +25,7 @@ const Emailbox = () => {
         Swal.fire({
           icon: "error",
           title: "Error",
-          text: "Invalid Email!",
+          text: "Invalid Email! ",
         });
       } else {
         Swal.fire({
