@@ -50,7 +50,7 @@ const Ordertable = () => {
   return (
     <div className="responsive">
       <Table dataSource={data} pagination={false}>
-      <Column title="Order #" dataIndex="order" key="order" />
+      <Column title="Order #" dataIndex="clientId" key="clientId" />
       <Column title="Order Type" dataIndex="plane" key="plane" />
       <Column title="description" dataIndex="description" key="description" />
       <Column title="Order received date" dataIndex="updated_at" key="updated_at
