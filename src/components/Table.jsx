@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Table } from "antd";
 import API_CONFIG from '../config/api';
@@ -9,6 +10,8 @@ const { Column } = Table;
 
 const Ordertable = () => {
   const [data, setData] = useState([]);
+
+  const navigate=useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,11 +49,21 @@ const Ordertable = () => {
     fetchData();
   }, []);
 
+  const handleClientIdClick = (clientId) => {
+    navigate(`/clientdata/${clientId}`)
+  };
+
 
   return (
     <div className="responsive">
-      <Table dataSource={data} pagination={false}>
-      <Column title="Order #" dataIndex="clientId" key="clientId" />
+      <Table dataSource={data} pagination={false} bordered="1px">
+      <Column title="Order #" dataIndex="clientId" key="clientId" 
+      render={(text, record) => (
+        <span style={{cursor:'pointer'}} onClick={() => handleClientIdClick(record.clientId)}>
+          {text}
+        </span>
+      )}
+         />
       <Column title="Order Type" dataIndex="plane" key="plane" />
       <Column title="description" dataIndex="description" key="description" />
       <Column title="Order received date" dataIndex="updated_at" key="updated_at
