@@ -19,7 +19,7 @@ const Ordertable = () => {
         const response = await axios.get(
           `http://localhost:4000/all-planes-data`
         );
-        console.log(response.data.data);
+        // console.log(response.data.data);
         const { DigitalMarketing, logo, seo, web, app } = response.data.data;
 
         const combinedData = [
@@ -39,7 +39,7 @@ const Ordertable = () => {
           ...DigitalMarketing.OnePlane
         ];
 
-        console.log(combinedData);
+        // console.log(combinedData);
         setData(combinedData); 
       } catch (error) {
         console.error("Error fetching data:", error);
