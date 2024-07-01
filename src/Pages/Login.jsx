@@ -4,8 +4,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoadingBar from "react-top-loading-bar";
 import Swal from "sweetalert2";
+import API_CONFIG from '../config/api';
 
 const LoginForm = () => {
+  const { apiKey } = API_CONFIG;
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [progress, setProgress] = useState(0);
@@ -19,7 +22,7 @@ const LoginForm = () => {
 
     try {
       const res = await axios.post(
-        "https://aaee-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/admin-auth",
+        `${apiKey}/admin-auth`,
         { username, password }
       );
       if (res) {

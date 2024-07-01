@@ -7,6 +7,7 @@ import Emailbox from "../components/Emailbox";
 import Otpform from "../components/Otpform";
 import Changepassword from "../components/Changepassword";
 import Protected from "../components/Protected/Protected";
+import ClientData from "../components/ClientData";
 
 const Router = () => {
   return (
@@ -33,6 +34,8 @@ const Router = () => {
             path="/changepassword"
             element={<Protected Component={Changepassword} />}
           />
+
+          
 
           {/* 404 Route */}
           {/* <Route path="*" element={<NotFound />} /> */}

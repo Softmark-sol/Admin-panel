@@ -7,7 +7,7 @@ const Protected = (props) => {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token || token == NaN || token.length != 6) {
+    if (!token || token === NaN || token.length != 6) {
       navigate("/login");
     } 
   }, []);
