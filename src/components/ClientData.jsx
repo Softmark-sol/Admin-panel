@@ -15,7 +15,6 @@ const ClientData = () => {
         const response = await axios.get(
           `http://localhost:4000/all-planes-data/${clientId}`
         );
-
         setData(response.data.data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -28,6 +27,10 @@ const ClientData = () => {
   const formatCreatedAt = (createdAt) => {
     const date = new Date(createdAt);
     return date.toLocaleString(); 
+  };
+
+  const renderValue = (value) => {
+    return value !== null && value !== undefined && value !== "" ? value : "nil";
   };
 
   return (
@@ -50,7 +53,7 @@ const ClientData = () => {
                               target="_blank"
                               rel="noopener noreferrer"
                             >
-                              {item[itemKey]}
+                              {renderValue(item[itemKey])}
                             </a>
                           </>
                         ) : itemKey === "functionalities" ? (
@@ -58,19 +61,19 @@ const ClientData = () => {
                             <span className="keys">{itemKey}: </span>
                             <ul>
                               {item[itemKey].map((func, idx) => (
-                                <li key={idx}>{func.trim()}</li>
+                                <li key={idx}>{renderValue(func.trim())}</li>
                               ))}
                             </ul>
                           </>
                         ) : itemKey === "created_at" ? (
                           <>
                             <span className="keys">{itemKey}: </span>
-                            <span>{formatCreatedAt(item[itemKey])}</span>
+                            <span>{formatCreatedAt(renderValue(item[itemKey]))}</span>
                           </>
                         ) : (
                           <>
                             <span className="keys">{itemKey}: </span>
-                            <span>{item[itemKey]}</span>
+                            <span>{renderValue(item[itemKey])}</span>
                           </>
                         )}
                       </>
