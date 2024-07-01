@@ -35,11 +35,7 @@ const Router = () => {
             element={<Protected Component={Changepassword} />}
           />
 
-          {/* single client data */}
-          <Route
-            path="/clientdata/:clientId"
-            element={<Protected Component={ClientData} />}
-          />
+          
 
           {/* 404 Route */}
           {/* <Route path="*" element={<NotFound />} /> */}

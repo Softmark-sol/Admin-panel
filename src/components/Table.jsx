@@ -19,7 +19,7 @@ const Ordertable = () => {
         const response = await axios.get(
           `http://localhost:4000/all-planes-data`
         );
-        // console.log(response.data.data);
+        console.log(response.data.data);
         const { DigitalMarketing, logo, seo, web, app } = response.data.data;
 
         const combinedData = [
@@ -49,8 +49,8 @@ const Ordertable = () => {
     fetchData();
   }, []);
 
-  const handleClientIdClick = (clientId) => {
-    navigate(`/clientdata/${clientId}`)
+  const handleClientIdClick = (clientId,id) => {
+    navigate(`/clientdata/${clientId}/${id}`)
   };
 
 
@@ -59,7 +59,7 @@ const Ordertable = () => {
       <Table dataSource={data} pagination={false} bordered="1px">
       <Column title="Order #" dataIndex="clientId" key="clientId" 
       render={(text, record) => (
-        <span style={{cursor:'pointer'}} onClick={() => handleClientIdClick(record.clientId)}>
+        <span style={{cursor:'pointer'}} onClick={() => handleClientIdClick(record.clientId,record.id)}>
           {text}
         </span>
       )}
@@ -70,8 +70,8 @@ const Ordertable = () => {
 " />
       <Column
         title="Requirements"
-        key="Requirements"
-        dataIndex="Requirements"
+        key="functionalities"
+        dataIndex="functionalities"
       />
       <Column
         title="Payment confirmation"
