@@ -14,3 +14,14 @@
     align-items: center;
     padding: 10px;
 }
+
+
+.col-center{
+    text-align: center;
+  }
+  .ant-table-cell {
+    white-space: normal;
+    text-align: justify;
+    max-width: 300px;
+  
+  }

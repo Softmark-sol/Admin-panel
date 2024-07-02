@@ -91,17 +91,19 @@ const Ordertable = () => {
           )}
         />
         <Column title="Order Type" dataIndex="plane" key="plane" />
-        <Column title="Description" dataIndex="description" key="description" />
+        <Column title="Description" dataIndex="description" key="description" width={300} />
         <Column
           title="Order received date"
           dataIndex="updated_at"
           key="updated_at"
         />
-        <Column
-          title="Requirements"
-          key="functionalities"
-          dataIndex="functionalities"
-        />
+         <Column
+        className="col-center"
+        title="Requirements"
+        key="functionalities"
+        dataIndex="functionalities"
+        width={100}
+      />
         <Column
           title="Payment confirmation"
           key="Paymentconfirmation"
