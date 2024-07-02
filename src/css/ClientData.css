@@ -1,0 +1,27 @@
+.clientH2{
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.client-main{
+    padding: 30px;
+}
+
+.client-subMain{
+    margin: 10px;
+}
+
+.keys{
+    /* font-size: 1rem; */
+    font-weight: bold;
+}
+.btn{
+    border: none;
+    padding: 12px 16px;
+    color: white !important;
+    background-color: #74bed7 !important;
+}
+.btn:hover{
+    transition: 1s;
+    background-color: #F3972B !important;
+}
