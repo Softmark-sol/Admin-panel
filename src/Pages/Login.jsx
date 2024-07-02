@@ -22,7 +22,7 @@ const LoginForm = () => {
 
     try {
       const res = await axios.post(
-        `${apiKey}/admin-auth`,
+        `http://localhost:4000/admin-auth`,
         { username, password }
       );
       if (res) {

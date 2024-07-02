@@ -20,7 +20,7 @@ const Ordertable = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `https://aaee-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/all-planes-data`
+          `http://localhost:4000/all-planes-data`
         );
         console.log(response.data.data);
         const { DigitalMarketing, logo, seo, web, app } = response.data.data;
