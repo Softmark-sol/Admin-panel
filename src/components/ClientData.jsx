@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useParams,useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Modalform from './Modalform';
-import '../css/ClientData.css'
+import '../css/ClientData.css';
 
 const ClientData = () => {
   const [data, setData] = useState({});
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [selectedItem, setSelectedItem] = useState(null); // State to hold selected item for update
 
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
-  const { clientId, id } = useParams();
+  const { clientId } = useParams(); // Only get clientId from useParams
   console.log('clientId', clientId);
-  console.log('id', id);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:4000/all-planes-data/${clientId}`);
         setData(response.data.data);
-        console.log(response.data.data)
+        console.log(response.data.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -38,32 +37,21 @@ const ClientData = () => {
     return value !== null && value !== undefined && value !== '' ? value : 'nil';
   };
 
-  const handleDelete = async () => {
+  const handleDelete = async (itemId) => {
     try {
-      const response = await axios.delete(`http://localhost:4000/all-planes-data/${id}/${clientId}`);
+      const response = await axios.delete(`http://localhost:4000/all-planes-data/${itemId}/${clientId}`);
       console.log(response);
       alert('User deleted successfully');
-      navigate('/')
+      navigate('/');
     } catch (error) {
       console.error('Error deleting data:', error);
       alert('Failed to delete user');
     }
   };
-  
 
-  const handleUpdate = async(item) => {
+  const handleUpdate = async (item) => {
     setSelectedItem(item); // Set the item to be edited
     setShowModal(true); // Open the modal
-
-    // try {
-    //   const response = await axios.delete(`http://localhost:4000/all-planes-data/${id}/${clientId}`);
-    //   console.log(response);
-    //   alert('User Updated successfully');
-    //   // navigate('/')
-    // } catch (error) {
-    //   console.error('Error updateing data:', error);
-    //   alert('Failed to Update user');
-    // }
   };
 
   const handleCloseModal = () => {
@@ -121,7 +109,7 @@ const ClientData = () => {
                     </button>
                   </div>
                   <div>
-                    <button className='btn' onClick={handleDelete}>
+                    <button className='btn' onClick={() => handleDelete(item.id)}> {/* Pass the correct id here */}
                       Delete
                     </button>
                   </div>
