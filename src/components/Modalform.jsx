@@ -1,130 +1,131 @@
-import { useState, useEffect } from 'react'
-import Button from 'react-bootstrap/Button'
-import Form from 'react-bootstrap/Form'
-import Modal from 'react-bootstrap/Modal'
+import React, { useState, useEffect } from 'react';
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+import Spinner from 'react-bootstrap/Spinner';
+import axios from 'axios';
 
-import Spinner from 'react-bootstrap/Spinner'
-
-
-// const { apiKey } = API_CONFIG;
-
-function Modalform({ isOpened, heading, handleClose }) {
-  const [show, setShow] = useState(isOpened)
-  const [formData, setFormData] = useState({
+function Modalform({ isOpened, heading, handleClose, formData }) {
+  const [show, setShow] = useState(isOpened);
+  const [loading, setLoading] = useState(false);
+  const [formValues, setFormValues] = useState({
     name: '',
     email: '',
     company: '',
     description: '',
     reference_sites: '',
-    Link_to_Graphics: [],
+    Link_to_Graphics: '',
     animation: '',
     domain: '',
-    drive_link: ''
-  })
-  const [loading, setLoading] = useState(false)
+    Functionallity: '',
+    drive_link: '',
+    image: null // State to hold the selected image file
+  });
 
   useEffect(() => {
-    setFormData({
-      name: '',
-      email: '',
-      company: '',
-      reference_sites: '',
-      description: '',
-      Link_to_Graphics: [],
-      animation: '',
-      domain: '',
-      drive_link: ''
-    })
-    setShow(isOpened)
-  }, [isOpened])
+    if (formData) {
+      setFormValues({
+        name: formData.name || '',
+        email: formData.email || '',
+        company: formData.company || '',
+        description: formData.description || '',
+        reference_sites: formData.reference_sites || '',
+        Link_to_Graphics: formData.Link_to_Graphics || '',
+        animation: formData.animation || '',
+        domain: formData.domain || '',
+        Functionallity: formData.Functionallity || '',
+        drive_link: formData.drive_link || '',
+        image: null // Reset image state when formData changes
+      });
+    } else {
+      // Initialize formValues if formData is null or undefined
+      setFormValues({
+        name: '',
+        email: '',
+        company: '',
+        description: '',
+        reference_sites: '',
+        Link_to_Graphics: '',
+        animation: '',
+        domain: '',
+        Functionallity: '',
+        drive_link: '',
+        image: null
+      });
+    }
+    setShow(isOpened);
+  }, [isOpened, formData]);
+
   const handleInputChange = (e) => {
-    const { id, value } = e.target
-    setFormData((prev) => ({
-      ...prev,
+    const { id, value } = e.target;
+    setFormValues({
+      ...formValues,
       [id]: value
-    }))
-  }
+    });
+  };
+
   const handleFileChange = (e) => {
-    const files = Array.from(e.target.files)
-    setFormData((prev) => ({
-      ...prev,
-      Link_to_Graphics: files
-    }))
-  }
+    const file = e.target.files[0];
+    setFormValues({
+      ...formValues,
+      image: file
+    });
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
-    const apiEndpoint =
-    `${apiKey}/web-standard-plane` // API endpoint
-    // 'http://localhost:4000/web-standard-plane'
-
-    
-    const requiredFields = ['name', 'email', 'description'];
-    for (const field of requiredFields) {
-      if (!formData[field]) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: `Please fill in the ${field} field.`,
-        });
-        return;
-      }
-    }
-
-    const data = new FormData()
-    for (const key in formData) {
-      if (key === 'Link_to_Graphics') {
-        formData[key].forEach((file) => {
-          data.append('Link_to_Graphics', file)
-        })
-      } else {
-        data.append(key, formData[key])
-      }
-    }
-    setLoading(true) // Show loading indicator
+    e.preventDefault();
+    setLoading(true);
+  
     try {
-      const response = await fetch(apiEndpoint, {
-        method: 'POST',
-        body: data
-      })
-      if (!response.ok) {
-        const errorText = await response.text()
-        throw new Error(`Network response was not ok: ${errorText}`)
+      const { id, clientId } = formData;
+  
+      const formDataToSend = new FormData();
+      formDataToSend.append('name', formValues.name);
+      formDataToSend.append('email', formValues.email);
+      formDataToSend.append('company', formValues.company);
+      formDataToSend.append('description', formValues.description);
+      formDataToSend.append('reference_sites', formValues.reference_sites);
+      formDataToSend.append('Link_to_Graphics', formValues.Link_to_Graphics);
+      formDataToSend.append('animation', formValues.animation);
+      formDataToSend.append('domain', formValues.domain);
+      formDataToSend.append('Functionallity', formValues.Functionallity);
+      formDataToSend.append('drive_link', formValues.drive_link);
+      if (formValues.image) {
+        formDataToSend.append('image', formValues.image);
       }
-      const result = await response.json()
-      Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Message sent successfully',
-        showConfirmButton: false,
-        timer: 1500
-      })
-      console.log('Success:', result)
-      handleClose() // Close the modal after successful submission
+  
+      const response = await axios.put(`http://localhost:4000/all-planes-data/${id}/${clientId}`, formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+  
+      console.log(response);
+      alert('User updated successfully');
+      handleClose();
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Something went wrong!'
-      })
-      console.error('Error:', error.message)
+      console.error('Error updating data:', error);
+      alert('Failed to update user');
     } finally {
-      setLoading(false) // Hide loading indicator
+      setLoading(false);
     }
-  }
+  };
+  
+
   return (
     <Modal show={show} onHide={handleClose} backdrop='static'>
       <Modal.Header closeButton>
         <Modal.Title>{heading}</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <Form style={{ overflowY: 'scroll',paddingRight:'20px' }} onSubmit={handleSubmit}>
+        <Form style={{ overflowY: 'scroll', paddingRight: '20px' }} onSubmit={handleSubmit}>
           <Form.Group className='mb-3' controlId='name'>
             <Form.Label className='custom-text'>Name</Form.Label>
             <Form.Control
               type='input'
               placeholder='Josh Anton'
               autoFocus
-              value={formData.name}
+              value={formValues.name}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -133,7 +134,7 @@ function Modalform({ isOpened, heading, handleClose }) {
             <Form.Control
               type='email'
               placeholder='name@example.com'
-              value={formData.email}
+              value={formValues.email}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -142,7 +143,7 @@ function Modalform({ isOpened, heading, handleClose }) {
             <Form.Control
               type='input'
               placeholder='Company'
-              value={formData.company}
+              value={formValues.company}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -151,7 +152,7 @@ function Modalform({ isOpened, heading, handleClose }) {
             <Form.Control
               type='input'
               placeholder='XYZ, XYZ, ABC'
-              value={formData.reference_sites}
+              value={formValues.reference_sites}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -161,7 +162,7 @@ function Modalform({ isOpened, heading, handleClose }) {
             <Form.Control
               type='input'
               placeholder='Google drive link or any drive link for graphics'
-              value={formData.drive_link}
+              value={formValues.drive_link}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -170,7 +171,7 @@ function Modalform({ isOpened, heading, handleClose }) {
             <Form.Control
               type='input'
               placeholder='3 Reference sites to be added'
-              value={formData.animation}
+              value={formValues.animation}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -179,7 +180,16 @@ function Modalform({ isOpened, heading, handleClose }) {
             <Form.Control
               type='input'
               placeholder='www.xyz.com OR three hosting options'
-              value={formData.domain}
+              value={formValues.domain}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+          <Form.Group className='mb-3' controlId='Functionallity'>
+            <Form.Label className='custom-text'>Functionallity</Form.Label>
+            <Form.Control
+              type='input'
+              placeholder='Functionallity'
+              value={formValues.Functionallity}
               onChange={handleInputChange}
             />
           </Form.Group>
@@ -189,16 +199,15 @@ function Modalform({ isOpened, heading, handleClose }) {
               as='textarea'
               rows={3}
               placeholder='Describe your requirements here'
-              value={formData.description}
+              value={formValues.description}
               onChange={handleInputChange}
             />
           </Form.Group>
-          <Form.Group className='mb-3' controlId='Link_to_Graphics'>
-            <Form.Label style={{ display: 'flex' }}>Graphics</Form.Label>
-            <input
+          <Form.Group className='mb-3' controlId='image'>
+            <Form.Label className='custom-text'>Upload Image</Form.Label>
+            <Form.Control
               type='file'
-              name='Link_to_Graphics'
-              multiple
+              name='image'
               onChange={handleFileChange}
             />
           </Form.Group>
@@ -209,7 +218,7 @@ function Modalform({ isOpened, heading, handleClose }) {
               onMouseEnter={(e) => (e.target.style.backgroundColor = '#F3972B')}
               onMouseLeave={(e) => (e.target.style.backgroundColor = '#4599B4')}
             >
-             {loading ? (
+              {loading ? (
                 <>
                   <Spinner
                     as='span'
@@ -221,8 +230,8 @@ function Modalform({ isOpened, heading, handleClose }) {
                   Sending...
                 </>
               ) : (
-                'Send Message' 
-              )}        
+                'Update Data'
+              )}
             </Button>
             <Button variant='secondary' onClick={handleClose}>
               Close
@@ -231,6 +240,7 @@ function Modalform({ isOpened, heading, handleClose }) {
         </Form>
       </Modal.Body>
     </Modal>
-  )
+  );
 }
-export default Modalform
+
+export default Modalform;

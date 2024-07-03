@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams,useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Modalform from './Modalform';
 import '../css/ClientData.css'
@@ -8,6 +8,8 @@ const ClientData = () => {
   const [data, setData] = useState({});
   const [showModal, setShowModal] = useState(false); // State to control modal visibility
   const [selectedItem, setSelectedItem] = useState(null); // State to hold selected item for update
+
+  const navigate=useNavigate()
 
   const { clientId, id } = useParams();
   console.log('clientId', clientId);
@@ -18,6 +20,7 @@ const ClientData = () => {
       try {
         const response = await axios.get(`http://localhost:4000/all-planes-data/${clientId}`);
         setData(response.data.data);
+        console.log(response.data.data)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -35,13 +38,32 @@ const ClientData = () => {
     return value !== null && value !== undefined && value !== '' ? value : 'nil';
   };
 
-  const handleDelete = () => {
-    // Implement delete functionality here
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`http://localhost:4000/all-planes-data/${id}/${clientId}`);
+      console.log(response);
+      alert('User deleted successfully');
+      navigate('/')
+    } catch (error) {
+      console.error('Error deleting data:', error);
+      alert('Failed to delete user');
+    }
   };
+  
 
-  const handleUpdate = (item) => {
+  const handleUpdate = async(item) => {
     setSelectedItem(item); // Set the item to be edited
     setShowModal(true); // Open the modal
+
+    // try {
+    //   const response = await axios.delete(`http://localhost:4000/all-planes-data/${id}/${clientId}`);
+    //   console.log(response);
+    //   alert('User Updated successfully');
+    //   // navigate('/')
+    // } catch (error) {
+    //   console.error('Error updateing data:', error);
+    //   alert('Failed to Update user');
+    // }
   };
 
   const handleCloseModal = () => {
