@@ -68,7 +68,7 @@ const ClientData = () => {
 
   const handleCloseModal = () => {
     setShowModal(false);
-    setSelectedItem(null); // Clear selected item when modal is closed
+    setSelectedItem(null); 
   };
 
   return (
