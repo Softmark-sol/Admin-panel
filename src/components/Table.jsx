@@ -93,7 +93,7 @@ const Ordertable = () => {
             </span>
           )}
         />
-        <Column title="Order Type" dataIndex="plane" key="plane" />
+        <Column title="Order Type" dataIndex="plan" key="plan" />
         <Column title="Description" dataIndex="description" key="description" width={300} />
         <Column
           title="Order received date"

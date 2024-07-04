@@ -17,7 +17,8 @@
 }
 .btn{
     border: none;
-    padding: 12px 16px;
+    text-align: center;
+    padding: 16px 24px;
     color: white !important;
     background-color: #74bed7 !important;
 }
@@ -25,3 +26,16 @@
     transition: 1s;
     background-color: #F3972B !important;
 }
+.col-center{
+    text-align: center;
+  }
+  .ant-table-cell {
+    white-space: normal;
+    text-align: justify;
+    max-width: 150px;
+  
+  }
+  /* .desc{
+    width: 100%;
+    max-width: 400px;
+  } */
