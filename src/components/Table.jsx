@@ -19,9 +19,7 @@ const Ordertable = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/all-planes-data`
-        );
+        const response = await axios.get(`http://localhost:4000/all-planes-data`);
         console.log(response.data.data);
         const { DigitalMarketing, logo, seo, web, app } = response.data.data;
 
@@ -67,6 +65,21 @@ const Ordertable = () => {
     navigate(`/clientdata/${clientId}/${id}`);
   };
 
+  const getStatusColor = (text) => {
+    switch (text) {
+      case "Pending":
+        return "yellow";
+      case "Completed":
+        return "green";
+      case "Cancelled":
+        return "red";
+      case "Progress":
+        return "blue";
+      default:
+        return "black";
+    }
+  };
+
   return (
     <div className="responsive">
       <div className="order-input">
@@ -100,20 +113,25 @@ const Ordertable = () => {
           dataIndex="updated_at"
           key="updated_at"
         />
-         <Column
-        className="col-center"
-        title="Status"
-        key="status"
-        dataIndex="status"
-        width={100}
-      />
-         <Column
-        className="col-center"
-        title="Requirements"
-        key="functionalities"
-        dataIndex="functionalities"
-        width={100}
-      />
+        <Column
+          className="col-center"
+          title="Status"
+          key="status"
+          dataIndex="status"
+          width={100}
+          render={(text) => (
+            <span style={{ backgroundColor: getStatusColor(text), color: "white", padding: "8px", borderRadius: "10px", fontWeight: "bold" }}>
+              {text}
+            </span>
+          )}
+        />
+        <Column
+          className="col-center"
+          title="Requirements"
+          key="functionalities"
+          dataIndex="functionalities"
+          width={100}
+        />
         <Column
           title="Payment confirmation"
           key="Paymentconfirmation"
