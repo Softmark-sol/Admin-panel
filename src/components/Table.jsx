@@ -102,6 +102,13 @@ const Ordertable = () => {
         />
          <Column
         className="col-center"
+        title="Status"
+        key="status"
+        dataIndex="status"
+        width={100}
+      />
+         <Column
+        className="col-center"
         title="Requirements"
         key="functionalities"
         dataIndex="functionalities"
