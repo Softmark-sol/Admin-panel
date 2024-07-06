@@ -4,30 +4,35 @@ import { Table } from "antd";
 import API_CONFIG from '../config/api';
 import "../css/Orders.css"
 
-
 const { apiKey } = API_CONFIG;
 const { Column } = Table;
 
 const Ordertable = () => {
   const [data, setData] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (page, pageSize) => {
       try {
-        const response = await axios.get(
-          `http://localhost:4000/all-conatctUs-data`
-        );
+        const response = await axios.get(`http://localhost:4000/all-conatctUs-data`, {
+          params: {
+            page,
+            pageSize,
+          },
+        });
         console.log(response.data.data);
-
-        // Assuming response.data is an array of objects
-        setData(response.data.data); 
+        
+        setData(response.data.data);
+        setTotal(response.data.data.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchData();
-  }, []);
+    fetchData(currentPage, pageSize);
+  }, [currentPage, pageSize]);
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
@@ -37,9 +42,23 @@ const Ordertable = () => {
     return `${year}-${month}-${day}`;
   };
 
+  const handleTableChange = (pagination) => {
+    setCurrentPage(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
+
   return (
     <div className="responsive">
-      <Table dataSource={data} pagination={false}>
+      <Table
+        dataSource={data}
+        pagination={{
+          current: currentPage,
+          pageSize: pageSize,
+          total: total,
+          showSizeChanger: true,
+        }}
+        onChange={handleTableChange}
+      >
         <Column title="Sr No." dataIndex="id" key="id" />
         <Column title="Name" dataIndex="name" key="name" />
         <Column title="Email" dataIndex="email" key="email" />
