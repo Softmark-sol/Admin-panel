@@ -47,7 +47,7 @@ const ClientData = () => {
   const handleDelete = async (itemId) => {
     try {
       const response = await axios.delete(
-        `${apiKey}/all-planes-data/${itemId}/${clientId}`
+        `http://localhost:4000/all-planes-data/${itemId}/${clientId}`
       );
       console.log(response);
       alert("User deleted successfully");
