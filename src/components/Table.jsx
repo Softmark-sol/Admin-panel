@@ -13,13 +13,18 @@ const Ordertable = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [searchClientId, setSearchClientId] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(5);
+  const [total, setTotal] = useState(0);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (page, pageSize) => {
       try {
-        const response = await axios.get(`http://localhost:4000/all-planes-data`);
+        const response = await axios.get(
+          `http://localhost:4000/all-planes-data`
+        );
         console.log(response.data.data);
         const { DigitalMarketing, logo, seo, web, app } = response.data.data;
 
@@ -37,24 +42,25 @@ const Ordertable = () => {
           ...app.basic.data,
           ...app.standard.data,
           ...app.premium.data,
-          ...DigitalMarketing.OnePlane
+          ...DigitalMarketing.OnePlane,
         ];
 
         setData(combinedData);
-        setFilteredData(combinedData); 
+        setFilteredData(combinedData);
+        setTotal(response.data.data.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchData();
-  }, []);
+    fetchData(currentPage, pageSize);
+  }, [currentPage, pageSize]);
 
   useEffect(() => {
     if (searchClientId.trim() === "") {
-      setFilteredData(data); 
+      setFilteredData(data);
     } else {
-      const filtered = data.filter(item =>
+      const filtered = data.filter((item) =>
         item.clientId.toString().includes(searchClientId.trim())
       );
       setFilteredData(filtered);
@@ -80,6 +86,11 @@ const Ordertable = () => {
     }
   };
 
+  const handleTableChange = (pagination) => {
+    setCurrentPage(pagination.current);
+    setPageSize(pagination.pageSize);
+  };
+
   return (
     <div className="responsive">
       <div className="order-input">
@@ -92,7 +103,18 @@ const Ordertable = () => {
           onChange={(e) => setSearchClientId(e.target.value)}
         />
       </div>
-      <Table dataSource={filteredData} pagination={false} bordered="1px">
+      <Table
+              onChange={handleTableChange}
+
+        dataSource={filteredData}
+        pagination={{
+          current: currentPage,
+          pageSize: pageSize,
+          total: total,
+          showSizeChanger: true,
+        }}
+        bordered="1px"
+      >
         <Column
           title="Order #"
           dataIndex="clientId"
@@ -107,7 +129,12 @@ const Ordertable = () => {
           )}
         />
         <Column title="Order Type" dataIndex="plan" key="plan" />
-        <Column title="Description" dataIndex="description" key="description" width={300} />
+        <Column
+          title="Description"
+          dataIndex="description"
+          key="description"
+          width={300}
+        />
         <Column
           title="Order received date"
           dataIndex="updated_at"
@@ -120,7 +147,15 @@ const Ordertable = () => {
           dataIndex="status"
           width={100}
           render={(text) => (
-            <span style={{ backgroundColor: getStatusColor(text), color: "white", padding: "8px", borderRadius: "10px", fontWeight: "bold" }}>
+            <span
+              style={{
+                backgroundColor: getStatusColor(text),
+                color: "white",
+                padding: "8px",
+                borderRadius: "10px",
+                fontWeight: "bold",
+              }}
+            >
               {text}
             </span>
           )}
