@@ -75,7 +75,7 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
       }
 
       const response = await axios.put(
-        `${apiKey}/all-planes-data/${id}/${clientId}`,
+        `http://localhost:4000/all-planes-data/${id}/${clientId}`,
         formDataToSend,
         {
           headers: {
