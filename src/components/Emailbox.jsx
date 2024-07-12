@@ -17,9 +17,11 @@ const Emailbox = () => {
 
     try {
       const res = await axios.post(
-        "https://02d8-2400-adc1-1c7-5400-f8fb-be41-2895-9eac.ngrok-free.app/forgot-password",
+        // "https://4fd8-2400-adc1-1c7-5400-65c7-23f9-8a78-1df2.ngrok-free.app/forgot-password",
+        "https://d224-202-47-32-176.ngrok-free.app/forgot-password"  ,                                                                                         
         { email: userEmail }
       );
+      console.log(res)
 
       if (res.status === 400) {
         Swal.fire({

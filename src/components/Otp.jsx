@@ -168,7 +168,7 @@ export default function OTPInput() {
   const checkotp = async () => {
     try {
       const res = await axios.post(
-        "https://aaee-2400-adc1-1c7-5400-28a4-c4ec-da94-d97f.ngrok-free.app/verify-reset-code",
+        "https://d224-202-47-32-176.ngrok-free.app/verify-reset-code",
         { code: otp }
       );
 

@@ -17,7 +17,6 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProgress(50);
-
     console.log(username, password);
 
     try {
@@ -29,21 +28,27 @@ const LoginForm = () => {
         localStorage.setItem("token", res.data.token);
         setProgress(100);
         setTimeout(() => {
-            navigate("/");
-          }, 200);
+          navigate("/");
+        }, 200);
       } else {
         console.log("Login Failed. Please check your credentials.");
         setProgress(100);
       }
 
     } catch (error) {
-        setProgress(100);
+      setProgress(100);
       console.error("Login Error:", error.message);
       Swal.fire({
         icon: "error",
         title: "Try Again",
         text: "Wrong UserName or Password.!",
       });
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSubmit(event);
     }
   };
 
@@ -75,6 +80,7 @@ const LoginForm = () => {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={handleKeyDown}
             required
           />
         </div>
@@ -97,6 +103,7 @@ const LoginForm = () => {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown}
             required
           />
         </div>
@@ -104,7 +111,7 @@ const LoginForm = () => {
         <button type="submit" id="button">
           Submit
         </button>
-        <a className="forgotLink" onClick={()=>{navigate('/checkemail')}} >
+        <a className="forgotLink" onClick={() => navigate('/checkemail')}>
           Forgot your password?
         </a>
       </form>
