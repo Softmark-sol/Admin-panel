@@ -8,6 +8,7 @@ import API_CONFIG from "../config/api";
 import EditButton from "./Buttons/EditBtn";
 import Delete from "./Buttons/DeleteBtn";
 import Swal from "sweetalert2";
+import Loader from "./Loader/Loader";
 
 const { Column } = Table;
 
@@ -244,77 +245,83 @@ const ClientData = () => {
 
   return (
     <div style={{ overflowY: "scroll", height: "88vh" }}>
-      {Object.keys(data).map((key) => (
-        <div key={key} className="client-main">
-          <>
-            <h2 className="clientH2">{key}</h2>
-            <Table dataSource={data[key]} pagination={false} rowKey="id">
-              {columns.map((column) => {
-                const dataIndex = column.dataIndex;
-                if (
-                  data[key].every(
-                    (item) => renderValue(item[dataIndex]) === "nil"
-                  )
-                ) {
-                  return null;
-                }
-                return (
-                  <Column
-                    key={column.key}
-                    title={column.title}
-                    dataIndex={column.dataIndex}
-                    width={column.width}
-                    className={column.className}
-                    render={column.render}
-                  />
-                );
-              })}
-              <Column
-                title="Action"
-                key="action"
-                width={120}
-                render={(text, record) => (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                    }}
-                  >
-                    <div onClick={() => handleUpdate(record, record.id)}>
-                      <EditButton />
-                    </div>
-                    {/* <Button
+      {data == "" ? (
+        <Loader />
+      ) :
+      (
+        Object.keys(data).map((key) => (
+          <div key={key} className="client-main">
+            <>
+              <h2 className="clientH2">{key}</h2>
+              <Table dataSource={data[key]} pagination={false} rowKey="id">
+                {columns.map((column) => {
+                  const dataIndex = column.dataIndex;
+                  if (
+                    data[key].every(
+                      (item) => renderValue(item[dataIndex]) === "nil"
+                    )
+                  ) {
+                    return null;
+                  }
+                  return (
+                    <Column
+                      key={column.key}
+                      title={column.title}
+                      dataIndex={column.dataIndex}
+                      width={column.width}
+                      className={column.className}
+                      render={column.render}
+                    />
+                  );
+                })}
+                <Column
+                  title="Action"
+                  key="action"
+                  width={120}
+                  render={(text, record) => (
+                    <div
                       style={{
-                        backgroundColor: "#74bed7",
-                        color: "white",
-                        border: "none",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
                       }}
-                      onClick={() => handleUpdate(record, record.id)}
                     >
-                      Update
-                    </Button> */}
-                    <div onClick={() => handleDelete(record.id)} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                      <Delete />
+                      <div onClick={() => handleUpdate(record, record.id)}>
+                        <EditButton />
+                      </div>
+                      {/* <Button
+                        style={{
+                          backgroundColor: "#74bed7",
+                          color: "white",
+                          border: "none",
+                        }}
+                        onClick={() => handleUpdate(record, record.id)}
+                      >
+                        Update
+                      </Button> */}
+                      <div onClick={() => handleDelete(record.id)} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <Delete />
+                      </div>
+  
+                      {/* <Button
+                        style={{
+                          backgroundColor: "#74bed7",
+                          color: "white",
+                          border: "none",
+                        }}
+                        onClick={() => handleDelete(record.id)}
+                      >
+                        Delete
+                      </Button> */}
                     </div>
-
-                    {/* <Button
-                      style={{
-                        backgroundColor: "#74bed7",
-                        color: "white",
-                        border: "none",
-                      }}
-                      onClick={() => handleDelete(record.id)}
-                    >
-                      Delete
-                    </Button> */}
-                  </div>
-                )}
-              />
-            </Table>
-          </>
-        </div>
-      ))}
+                  )}
+                />
+                
+              </Table>
+            </>
+          </div>
+        ))
+      )}
       <Modalform
         isOpened={showModal}
         heading="Update Data"
