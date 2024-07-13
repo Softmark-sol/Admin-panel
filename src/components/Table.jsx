@@ -21,13 +21,13 @@ const Ordertable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async (page, pageSize) => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:4000/all-planes-data`
         );
         console.log(response.data.data);
-        const { DigitalMarketing, logo, seo, web, app } = response.data.data;
+        const { digitalMarketing, logo, seo, web, app } = response.data.data;
 
         const combinedData = [
           ...seo.basic.data,
@@ -43,7 +43,7 @@ const Ordertable = () => {
           ...app.basic.data,
           ...app.standard.data,
           ...app.premium.data,
-          ...DigitalMarketing.OnePlane,
+          ...digitalMarketing.OnePlane,
         ];
 
         setData(combinedData);
@@ -76,9 +76,9 @@ const Ordertable = () => {
     switch (text) {
       case "Pending":
         return "yellow";
-      case "Completed":
+      case "Complete":
         return "green";
-      case "Cancelled":
+      case "Cancel":
         return "red";
       case "Progress":
         return "blue";

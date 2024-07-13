@@ -163,9 +163,9 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
               name="status"
             >
               <option value="Pending" style={{color: "yellow"}}>Pending</option>
-              <option value="Completed" style={{color: "green"}}>Completed</option>
+              <option value="Complete" style={{color: "green"}}>Completed</option>
               <option value="Progress" style={{color: "blue"}}>Progress</option>
-              <option value="Cancelled" style={{color: "red"}}>Cancelled</option>
+              <option value="Cancel" style={{color: "red"}}>Cancelled</option>
             </Form.Select>
           </Form.Group>
 

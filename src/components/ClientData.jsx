@@ -85,9 +85,9 @@ const ClientData = () => {
     switch (status) {
       case "Pending":
         return "yellow";
-      case "Completed":
+      case "Complete":
         return "green";
-      case "Cancelled":
+      case "Cancel":
         return "red";
       case "Progress":
         return "blue";

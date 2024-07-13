@@ -3,6 +3,7 @@ import { IoReceiptSharp } from "react-icons/io5";
 import { useNavigate, useLocation } from "react-router-dom";
 import { CiLocationArrow1 } from "react-icons/ci";
 import { FaSearchengin } from "react-icons/fa6";
+import { IoBarChartSharp } from "react-icons/io5";
 import "../css/Sidebar.css";
 
 const Sidebar = () => {
@@ -18,6 +19,13 @@ const Sidebar = () => {
         <div
           className={`sidebar-content ${location.pathname === "/" ? "active" : ""}`}
           onClick={() => navigate("/")}
+        >
+          <IoBarChartSharp color="#C4D7F8" size={20} />
+          <span className="sidebar-span">Dashboard</span>
+        </div>
+        <div
+          className={`sidebar-content ${location.pathname === "/orders" ? "active" : ""}`}
+          onClick={() => navigate("/orders")}
         >
           <IoReceiptSharp color="#C4D7F8" size={20} />
           <span className="sidebar-span">Orders</span>
