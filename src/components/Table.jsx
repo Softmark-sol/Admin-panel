@@ -104,8 +104,7 @@ const Ordertable = () => {
         />
       </div>
       <Table
-              onChange={handleTableChange}
-
+        onChange={handleTableChange}
         dataSource={filteredData}
         pagination={{
           current: currentPage,

@@ -5,6 +5,9 @@ import Modalform from "./Modalform";
 import { Table, Button } from "antd";
 import "../css/ClientData.css";
 import API_CONFIG from "../config/api";
+import EditButton from "./Buttons/EditBtn";
+import Delete from "./Buttons/DeleteBtn";
+import Swal from "sweetalert2";
 
 const { Column } = Table;
 
@@ -49,13 +52,21 @@ const ClientData = () => {
       const response = await axios.delete(
         `http://localhost:4000/all-planes-data/${itemId}/${clientId}`
       );
-      console.log(response);
-      alert("User deleted successfully");
-      window.location.reload();
+      const result = await Swal.fire({
+        icon: 'success',
+        title: 'Deleted',
+        text: 'User Deleted successfully.',
+      });
+      if (response && result.isConfirmed) {
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error deleting data:", error);
-      alert("Failed to delete user");
-    }
+      Swal.fire({
+        icon: "error",
+        title: "Try Again",
+        text: "Something went wrong.",
+      });    }
   };
 
   const handleUpdate = (item, id) => {
@@ -216,7 +227,17 @@ const ClientData = () => {
       key: "status",
       width: 150,
       render: (status) => (
-        <span style={{ backgroundColor: getStatusColor(status), color: "white", padding: "8px", borderRadius: "10px", fontWeight: "bold" }}>{status}</span>
+        <span
+          style={{
+            backgroundColor: getStatusColor(status),
+            color: "white",
+            padding: "8px",
+            borderRadius: "10px",
+            fontWeight: "bold",
+          }}
+        >
+          {status}
+        </span>
       ),
     },
   ];
@@ -260,7 +281,10 @@ const ClientData = () => {
                       gap: "10px",
                     }}
                   >
-                    <Button
+                    <div onClick={() => handleUpdate(record, record.id)}>
+                      <EditButton />
+                    </div>
+                    {/* <Button
                       style={{
                         backgroundColor: "#74bed7",
                         color: "white",
@@ -269,8 +293,12 @@ const ClientData = () => {
                       onClick={() => handleUpdate(record, record.id)}
                     >
                       Update
-                    </Button>
-                    <Button
+                    </Button> */}
+                    <div onClick={() => handleDelete(record.id)} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                      <Delete />
+                    </div>
+
+                    {/* <Button
                       style={{
                         backgroundColor: "#74bed7",
                         color: "white",
@@ -279,7 +307,7 @@ const ClientData = () => {
                       onClick={() => handleDelete(record.id)}
                     >
                       Delete
-                    </Button>
+                    </Button> */}
                   </div>
                 )}
               />

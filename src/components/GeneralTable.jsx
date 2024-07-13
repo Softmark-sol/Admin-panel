@@ -22,7 +22,7 @@ const Ordertable = () => {
             pageSize,
           },
         });
-        console.log(response.data.data);
+        console.log(response);
         
         setData(response.data.data);
         setTotal(response.data.data.length);

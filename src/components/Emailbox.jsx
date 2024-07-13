@@ -4,10 +4,12 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Swal from "sweetalert2";
 import LoadingBar from "react-top-loading-bar";
+import API_CONFIG from "../config/api";
 
 const Emailbox = () => {
   const [userEmail, setUserEmail] = useState("");
   const [progress, setProgress] = useState(0);
+  const { apiKey } = API_CONFIG;
 
   const navigate = useNavigate();
 
@@ -17,8 +19,7 @@ const Emailbox = () => {
 
     try {
       const res = await axios.post(
-        // "https://4fd8-2400-adc1-1c7-5400-65c7-23f9-8a78-1df2.ngrok-free.app/forgot-password",
-        "https://d224-202-47-32-176.ngrok-free.app/forgot-password"  ,                                                                                         
+        `${apiKey}/forgot-password` ,                                                                                         
         { email: userEmail }
       );
       console.log(res)

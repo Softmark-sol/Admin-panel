@@ -5,6 +5,7 @@ import Modal from "react-bootstrap/Modal";
 import Spinner from "react-bootstrap/Spinner";
 import axios from "axios";
 import API_CONFIG from "../config/api";
+import Swal from "sweetalert2";
 
 function Modalform({ isOpened, heading, handleClose, formData }) {
   const { apiKey } = API_CONFIG;
@@ -84,16 +85,23 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
         }
       );
 
-      if (response) {
+      console.log(response);
+      const result = await Swal.fire({
+        icon: 'success',
+        title: 'Updated',
+        text: 'User updated successfully.',
+      });
+      handleClose();
+      if (response && result.isConfirmed) {
         window.location.reload();
       }
-
-      console.log(response);
-      alert("User updated successfully");
-      handleClose();
     } catch (error) {
       console.error("Error updating data:", error);
-      alert("Failed to update user");
+      Swal.fire({
+        icon: "error",
+        title: "Try Again",
+        text: "Something went wrong.",
+      });
     } finally {
       setLoading(false);
     }
