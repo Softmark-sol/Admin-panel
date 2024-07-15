@@ -68,8 +68,8 @@ const BarAndPieCharts = () => {
       </text>
     );
   };
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+//   FFBB28
+  const COLORS = ["#FFBB28", "#00C49F", "#0088FE", "#ff0000"];
 
   return (
     <div
