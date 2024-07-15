@@ -5,9 +5,11 @@ import { Box, styled } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import API_CONFIG from "../config/api";
 
 function OTP({ separator, length, value, onChange, onSendOTP }) {
   const inputRefs = React.useRef(new Array(length).fill(null));
+  const { apiKey } = API_CONFIG;
 
   const focusInput = (targetIndex) => {
     const targetInput = inputRefs.current[targetIndex];
@@ -168,7 +170,7 @@ export default function OTPInput() {
   const checkotp = async () => {
     try {
       const res = await axios.post(
-        "https://d224-202-47-32-176.ngrok-free.app/verify-reset-code",
+        `${apiKey}/verify-reset-code`,
         { code: otp }
       );
 

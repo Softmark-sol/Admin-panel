@@ -1,11 +1,13 @@
-
 import React, { useState } from 'react';
 import '../css/Login.css';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import API_CONFIG from "../config/api";
 
 const Changepassword = () => {
+  const { apiKey } = API_CONFIG;
+
     const [newpassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
   
@@ -16,8 +18,7 @@ const Changepassword = () => {
     
       try {
         const res = await axios.post(
-          // "https://4fd8-2400-adc1-1c7-5400-65c7-23f9-8a78-1df2.ngrok-free.app/reset-password",
-          "https://d224-202-47-32-176.ngrok-free.app " ,
+          `${apiKey}/reset-password` ,
           { newPassword: newpassword }
         );
   

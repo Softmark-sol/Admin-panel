@@ -7,6 +7,7 @@ import Orders from "./Orders";
 import GeneralInquery from "./GeneralInquery";
 import NotFound from "../components/NotFound/NotFound";
 import ClientData from "../components/ClientData";
+import Graphs from "./Graphs";
 
 const Dashboard = () => {
   return (
@@ -18,8 +19,9 @@ const Dashboard = () => {
         </div>
         <div className="right">
           <Routes>
-            <Route path="/" element={<Orders />} />
+            <Route path="/" element={<Graphs />} />
             <Route path="/general-inquery" element={<GeneralInquery />} />
+            <Route path="/orders" element={<Orders />} />
             {/* single client data */}
           <Route
             path="/clientdata/:clientId/:id"

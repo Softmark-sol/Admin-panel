@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import { GiHamburgerMenu } from 'react-icons/gi';
+import React, { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import Box from "@mui/material/Box";
+import Drawer from "@mui/material/Drawer";
+import Button from "@mui/material/Button";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import { GiHamburgerMenu } from "react-icons/gi";
 import { IoReceiptSharp } from "react-icons/io5";
+import { IoBarChartSharp } from "react-icons/io5";
 import { FaSearchengin } from "react-icons/fa6";
+import API_CONFIG from "../config/api";
+import axios from "axios";
 
 const LeftDrawer = () => {
-  const location = useLocation();
+  const { apiKey } = API_CONFIG;
 
   const [state, setState] = useState({
     left: false,
@@ -24,8 +27,8 @@ const LeftDrawer = () => {
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
     ) {
       return;
     }
@@ -33,17 +36,45 @@ const LeftDrawer = () => {
     setState({ ...state, [anchor]: open });
   };
 
-
   const handleNavigation = (text) => {
     switch (text) {
-      case 'Orders':
-        navigate('/');
+      case "Dashboard":
+        navigate("/");
         break;
-      case 'General Inqueries':
-        navigate('/general-inquery');
+      case "Orders":
+        navigate("/orders");
+        break;
+      case "General Inqueries":
+        navigate("/general-inquery");
         break;
       default:
         break;
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        throw new Error("No token found");
+      }
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const response = await axios.post(`${apiKey}/logout`, {}, config);
+
+      console.log("Logout successful:", response.data);
+
+      localStorage.removeItem("token");
+
+      window.location.reload();
+    } catch (error) {
+      console.error("Logout error:", error);
     }
   };
 
@@ -56,17 +87,19 @@ const LeftDrawer = () => {
     >
       <List>
         {[
-          { text: 'Orders', icon: <IoReceiptSharp color="#4599B4" /> },
-          { text: 'General Inqueries', icon: <FaSearchengin color="#4599B4" /> },
+          { text: "Dashboard", icon: <IoBarChartSharp color="#4599B4" /> },
+          { text: "Orders", icon: <IoReceiptSharp color="#4599B4" /> },
+          {
+            text: "General Inqueries",
+            icon: <FaSearchengin color="#4599B4" />,
+          },
         ].map(({ text, icon }) => (
           <ListItem key={text} disablePadding>
             <ListItemButton
               onClick={() => handleNavigation(text)}
-              sx={{ paddingLeft: '8px' }}
+              sx={{ paddingLeft: "8px" }}
             >
-              <ListItemIcon
-                sx={{ minWidth: '35px', color: '#1976d2' }}
-              >
+              <ListItemIcon sx={{ minWidth: "35px", color: "#1976d2" }}>
                 {icon}
               </ListItemIcon>
               <ListItemText primary={text} />
@@ -80,13 +113,27 @@ const LeftDrawer = () => {
 
   return (
     <div>
-      <Button onClick={toggleDrawer('left', true)}><GiHamburgerMenu color='white' size={20}/></Button>
+      <Button onClick={toggleDrawer("left", true)}>
+        <GiHamburgerMenu color="white" size={20} />
+      </Button>
       <Drawer
-        anchor='left'
+        anchor="left"
         open={state.left}
-        onClose={toggleDrawer('left', false)}
+        onClose={toggleDrawer("left", false)}
       >
-        {list('left')}
+        {list("left")}
+        <div
+          onClick={() => handleLogout()}
+          style={{
+            backgroundColor: "#4599b4",
+            padding: "10px",
+            fontSize: "1rem",
+            width: "100%",
+            textAlign: "center",
+          }}
+        >
+          <span style={{ color: "white", fontWeight: "bold" }}>Logout</span>
+        </div>
       </Drawer>
     </div>
   );

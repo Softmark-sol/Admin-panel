@@ -5,6 +5,7 @@ import { Table } from "antd";
 import API_CONFIG from "../config/api";
 import "../css/Orders.css";
 import TextField from "@mui/material/TextField";
+import Loader from "./Loader/Loader";
 
 const { apiKey } = API_CONFIG;
 const { Column } = Table;
@@ -20,13 +21,13 @@ const Ordertable = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchData = async (page, pageSize) => {
+    const fetchData = async () => {
       try {
         const response = await axios.get(
           `http://localhost:4000/all-planes-data`
         );
         console.log(response.data.data);
-        const { DigitalMarketing, logo, seo, web, app } = response.data.data;
+        const { digitalMarketing, logo, seo, web, app } = response.data.data;
 
         const combinedData = [
           ...seo.basic.data,
@@ -42,7 +43,7 @@ const Ordertable = () => {
           ...app.basic.data,
           ...app.standard.data,
           ...app.premium.data,
-          ...DigitalMarketing.OnePlane,
+          ...digitalMarketing.OnePlane,
         ];
 
         setData(combinedData);
@@ -75,9 +76,9 @@ const Ordertable = () => {
     switch (text) {
       case "Pending":
         return "yellow";
-      case "Completed":
+      case "Complete":
         return "green";
-      case "Cancelled":
+      case "Cancel":
         return "red";
       case "Progress":
         return "blue";
@@ -103,76 +104,79 @@ const Ordertable = () => {
           onChange={(e) => setSearchClientId(e.target.value)}
         />
       </div>
-      <Table
-              onChange={handleTableChange}
-
-        dataSource={filteredData}
-        pagination={{
-          current: currentPage,
-          pageSize: pageSize,
-          total: total,
-          showSizeChanger: true,
-        }}
-        bordered="1px"
-      >
-        <Column
-          title="Order #"
-          dataIndex="clientId"
-          key="clientId"
-          render={(text, record) => (
-            <span
-              style={{ cursor: "pointer" }}
-              onClick={() => handleClientIdClick(record.clientId, record.id)}
-            >
-              {text}
-            </span>
-          )}
-        />
-        <Column title="Order Type" dataIndex="plan" key="plan" />
-        <Column
-          title="Description"
-          dataIndex="description"
-          key="description"
-          width={300}
-        />
-        <Column
-          title="Order received date"
-          dataIndex="updated_at"
-          key="updated_at"
-        />
-        <Column
-          className="col-center"
-          title="Status"
-          key="status"
-          dataIndex="status"
-          width={100}
-          render={(text) => (
-            <span
-              style={{
-                backgroundColor: getStatusColor(text),
-                color: "white",
-                padding: "8px",
-                borderRadius: "10px",
-                fontWeight: "bold",
-              }}
-            >
-              {text}
-            </span>
-          )}
-        />
-        <Column
-          className="col-center"
-          title="Requirements"
-          key="functionalities"
-          dataIndex="functionalities"
-          width={100}
-        />
-        <Column
-          title="Payment confirmation"
-          key="Paymentconfirmation"
-          dataIndex="Paymentconfirmation"
-        />
-      </Table>
+      {data == "" ? (
+        <Loader />
+      ) : (
+        <Table
+          onChange={handleTableChange}
+          dataSource={filteredData}
+          pagination={{
+            current: currentPage,
+            pageSize: pageSize,
+            total: total,
+            showSizeChanger: true,
+          }}
+          bordered="1px"
+        >
+          <Column
+            title="Order #"
+            dataIndex="clientId"
+            key="clientId"
+            render={(text, record) => (
+              <span
+                style={{ cursor: "pointer" }}
+                onClick={() => handleClientIdClick(record.clientId, record.id)}
+              >
+                {text}
+              </span>
+            )}
+          />
+          <Column title="Order Type" dataIndex="plan" key="plan" />
+          <Column
+            title="Description"
+            dataIndex="description"
+            key="description"
+            width={300}
+          />
+          <Column
+            title="Order received date"
+            dataIndex="updated_at"
+            key="updated_at"
+          />
+          <Column
+            className="col-center"
+            title="Status"
+            key="status"
+            dataIndex="status"
+            width={100}
+            render={(text) => (
+              <span
+                style={{
+                  backgroundColor: getStatusColor(text),
+                  color: "white",
+                  padding: "8px",
+                  borderRadius: "10px",
+                  fontWeight: "bold",
+                }}
+              >
+                {text}
+              </span>
+            )}
+          />
+          <Column
+            className="col-center"
+            title="Requirements"
+            key="functionalities"
+            dataIndex="functionalities"
+            width={100}
+          />
+          <Column
+            title="Payment confirmation"
+            key="Paymentconfirmation"
+            dataIndex="Paymentconfirmation"
+          />
+        </Table>
+      )}
     </div>
   );
 };

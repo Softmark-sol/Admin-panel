@@ -5,6 +5,10 @@ import Modalform from "./Modalform";
 import { Table, Button } from "antd";
 import "../css/ClientData.css";
 import API_CONFIG from "../config/api";
+import EditButton from "./Buttons/EditBtn";
+import Delete from "./Buttons/DeleteBtn";
+import Swal from "sweetalert2";
+import Loader from "./Loader/Loader";
 
 const { Column } = Table;
 
@@ -49,13 +53,21 @@ const ClientData = () => {
       const response = await axios.delete(
         `http://localhost:4000/all-planes-data/${itemId}/${clientId}`
       );
-      console.log(response);
-      alert("User deleted successfully");
-      window.location.reload();
+      const result = await Swal.fire({
+        icon: 'success',
+        title: 'Deleted',
+        text: 'User Deleted successfully.',
+      });
+      if (response && result.isConfirmed) {
+        window.location.reload();
+      }
     } catch (error) {
       console.error("Error deleting data:", error);
-      alert("Failed to delete user");
-    }
+      Swal.fire({
+        icon: "error",
+        title: "Try Again",
+        text: "Something went wrong.",
+      });    }
   };
 
   const handleUpdate = (item, id) => {
@@ -73,9 +85,9 @@ const ClientData = () => {
     switch (status) {
       case "Pending":
         return "yellow";
-      case "Completed":
+      case "Complete":
         return "green";
-      case "Cancelled":
+      case "Cancel":
         return "red";
       case "Progress":
         return "blue";
@@ -216,77 +228,100 @@ const ClientData = () => {
       key: "status",
       width: 150,
       render: (status) => (
-        <span style={{ backgroundColor: getStatusColor(status), color: "white", padding: "8px", borderRadius: "10px", fontWeight: "bold" }}>{status}</span>
+        <span
+          style={{
+            backgroundColor: getStatusColor(status),
+            color: "white",
+            padding: "8px",
+            borderRadius: "10px",
+            fontWeight: "bold",
+          }}
+        >
+          {status}
+        </span>
       ),
     },
   ];
 
   return (
     <div style={{ overflowY: "scroll", height: "88vh" }}>
-      {Object.keys(data).map((key) => (
-        <div key={key} className="client-main">
-          <>
-            <h2 className="clientH2">{key}</h2>
-            <Table dataSource={data[key]} pagination={false} rowKey="id">
-              {columns.map((column) => {
-                const dataIndex = column.dataIndex;
-                if (
-                  data[key].every(
-                    (item) => renderValue(item[dataIndex]) === "nil"
-                  )
-                ) {
-                  return null;
-                }
-                return (
-                  <Column
-                    key={column.key}
-                    title={column.title}
-                    dataIndex={column.dataIndex}
-                    width={column.width}
-                    className={column.className}
-                    render={column.render}
-                  />
-                );
-              })}
-              <Column
-                title="Action"
-                key="action"
-                width={120}
-                render={(text, record) => (
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "10px",
-                    }}
-                  >
-                    <Button
+      {data == "" ? (
+        <Loader />
+      ) :
+      (
+        Object.keys(data).map((key) => (
+          <div key={key} className="client-main">
+            <>
+              <h2 className="clientH2">{key}</h2>
+              <Table dataSource={data[key]} pagination={false} rowKey="id">
+                {columns.map((column) => {
+                  const dataIndex = column.dataIndex;
+                  if (
+                    data[key].every(
+                      (item) => renderValue(item[dataIndex]) === "nil"
+                    )
+                  ) {
+                    return null;
+                  }
+                  return (
+                    <Column
+                      key={column.key}
+                      title={column.title}
+                      dataIndex={column.dataIndex}
+                      width={column.width}
+                      className={column.className}
+                      render={column.render}
+                    />
+                  );
+                })}
+                <Column
+                  title="Action"
+                  key="action"
+                  width={120}
+                  render={(text, record) => (
+                    <div
                       style={{
-                        backgroundColor: "#74bed7",
-                        color: "white",
-                        border: "none",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: "10px",
                       }}
-                      onClick={() => handleUpdate(record, record.id)}
                     >
-                      Update
-                    </Button>
-                    <Button
-                      style={{
-                        backgroundColor: "#74bed7",
-                        color: "white",
-                        border: "none",
-                      }}
-                      onClick={() => handleDelete(record.id)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                )}
-              />
-            </Table>
-          </>
-        </div>
-      ))}
+                      <div onClick={() => handleUpdate(record, record.id)}>
+                        <EditButton />
+                      </div>
+                      {/* <Button
+                        style={{
+                          backgroundColor: "#74bed7",
+                          color: "white",
+                          border: "none",
+                        }}
+                        onClick={() => handleUpdate(record, record.id)}
+                      >
+                        Update
+                      </Button> */}
+                      <div onClick={() => handleDelete(record.id)} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                        <Delete />
+                      </div>
+  
+                      {/* <Button
+                        style={{
+                          backgroundColor: "#74bed7",
+                          color: "white",
+                          border: "none",
+                        }}
+                        onClick={() => handleDelete(record.id)}
+                      >
+                        Delete
+                      </Button> */}
+                    </div>
+                  )}
+                />
+                
+              </Table>
+            </>
+          </div>
+        ))
+      )}
       <Modalform
         isOpened={showModal}
         heading="Update Data"
