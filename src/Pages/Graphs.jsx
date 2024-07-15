@@ -35,7 +35,7 @@ const BarAndPieCharts = () => {
           value: countsWithoutTotal[key],
         }));
         setBarChartData(formattedBarData);
-        setPieChartData(formattedBarData);
+        setPieChartData(formattedBarData); // Assuming pie chart data structure is similar
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -68,8 +68,8 @@ const BarAndPieCharts = () => {
       </text>
     );
   };
-//   FFBB28
-  const COLORS = ["#FFBB28", "#00C49F", "#0088FE", "#ff0000"];
+
+  const COLORS = ["#FFBB28", "#00C49F", "#0088FE", "#FF8042"]; // Different colors for bars and pie sectors
 
   return (
     <div
@@ -123,8 +123,12 @@ const BarAndPieCharts = () => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  <Legend />
-                  <Bar dataKey="value" fill="#8884d8" />
+                  {/* <Legend /> */}
+                  <Bar dataKey="value">
+                    {barChartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                    ))}
+                  </Bar>
                 </BarChart>
               </ResponsiveContainer>
             </div>
@@ -151,10 +155,7 @@ const BarAndPieCharts = () => {
                     dataKey="value"
                   >
                     {pieChartData.map((entry, index) => (
-                      <Cell
-                        key={`cell-${index}`}
-                        fill={COLORS[index % COLORS.length]}
-                      />
+                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Pie>
                   <Tooltip />
