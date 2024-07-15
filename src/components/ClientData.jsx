@@ -26,7 +26,7 @@ const ClientData = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/all-planes-data/${clientId}`
+          `${apiKey}/all-planes-data/${clientId}`
         );
         setData(response.data.data);
       } catch (error) {
@@ -51,7 +51,7 @@ const ClientData = () => {
   const handleDelete = async (itemId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:4000/all-planes-data/${itemId}/${clientId}`
+        `${apiKey}/all-planes-data/${itemId}/${clientId}`
       );
       const result = await Swal.fire({
         icon: 'success',

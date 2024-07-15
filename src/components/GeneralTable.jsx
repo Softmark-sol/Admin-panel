@@ -18,7 +18,7 @@ const Ordertable = () => {
     const fetchData = async (page, pageSize) => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/all-conatctUs-data`,
+          `${apiKey}/all-conatctUs-data`,
           {
             params: {
               page,

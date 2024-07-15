@@ -24,10 +24,9 @@ const Ordertable = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:4000/all-planes-data`
+          `${apiKey}/all-planes-data`
         );
-        console.log(response.data.data);
-        const { digitalMarketing, logo, seo, web, app } = response.data.data;
+        const { DigitalMarketing, logo, seo, web, app } = response.data.data;
 
         const combinedData = [
           ...seo.basic.data,
@@ -43,7 +42,7 @@ const Ordertable = () => {
           ...app.basic.data,
           ...app.standard.data,
           ...app.premium.data,
-          ...digitalMarketing.OnePlane,
+          // ...DigitalMarketing.OnePlane,
         ];
 
         setData(combinedData);
