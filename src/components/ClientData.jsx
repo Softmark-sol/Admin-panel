@@ -59,7 +59,7 @@ const ClientData = () => {
         text: 'User Deleted successfully.',
       });
       if (response && result.isConfirmed) {
-        window.location.reload();
+        await refreshData(); // Refresh the data after deleting
       }
     } catch (error) {
       console.error("Error deleting data:", error);
@@ -67,7 +67,8 @@ const ClientData = () => {
         icon: "error",
         title: "Try Again",
         text: "Something went wrong.",
-      });    }
+      });
+    }
   };
 
   const handleUpdate = (item, id) => {
@@ -76,9 +77,10 @@ const ClientData = () => {
     setShowModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = async () => {
     setShowModal(false);
     setSelectedItem(null);
+    await refreshData(); // Refresh the data after closing the modal
   };
 
   const getStatusColor = (status) => {
@@ -115,13 +117,13 @@ const ClientData = () => {
       width: 150,
     },
     {
-      title: "Access_and_Permissions",
+      title: "Access and Permissions",
       dataIndex: "access_and_permissions",
       key: "access_and_permissions",
       width: 150,
     },
     {
-      title: "Reference Sides",
+      title: "Reference Sites",
       dataIndex: "reference_sites",
       key: "reference_sites",
       width: 150,
@@ -243,12 +245,20 @@ const ClientData = () => {
     },
   ];
 
+  const refreshData = async () => {
+    try {
+      const response = await axios.get(`${apiKey}/all-planes-data/${clientId}`);
+      setData(response.data.data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
   return (
     <div style={{ overflowY: "scroll", height: "88vh" }}>
-      {data == "" ? (
+      {data.length === 0 ? (
         <Loader />
-      ) :
-      (
+      ) : (
         Object.keys(data).map((key) => (
           <div key={key} className="client-main">
             <>
@@ -289,34 +299,12 @@ const ClientData = () => {
                       <div onClick={() => handleUpdate(record, record.id)}>
                         <EditButton />
                       </div>
-                      {/* <Button
-                        style={{
-                          backgroundColor: "#74bed7",
-                          color: "white",
-                          border: "none",
-                        }}
-                        onClick={() => handleUpdate(record, record.id)}
-                      >
-                        Update
-                      </Button> */}
                       <div onClick={() => handleDelete(record.id)} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                         <Delete />
                       </div>
-  
-                      {/* <Button
-                        style={{
-                          backgroundColor: "#74bed7",
-                          color: "white",
-                          border: "none",
-                        }}
-                        onClick={() => handleDelete(record.id)}
-                      >
-                        Delete
-                      </Button> */}
                     </div>
                   )}
                 />
-                
               </Table>
             </>
           </div>
