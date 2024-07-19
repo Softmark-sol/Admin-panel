@@ -224,6 +224,7 @@ const ClientData = () => {
       key: "updated_at",
       width: 150,
     },
+
     {
       title: "Order Status",
       dataIndex: "status",
