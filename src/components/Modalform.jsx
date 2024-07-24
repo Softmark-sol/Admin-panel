@@ -11,6 +11,7 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
   const { apiKey } = API_CONFIG;
   const [loading, setLoading] = useState(false);
   const [formValues, setFormValues] = useState({
+    plan: "",
     name: "",
     email: "",
     company: "",
@@ -22,6 +23,7 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
   useEffect(() => {
     if (formData) {
       setFormValues({
+        plan: formData.plan || "",
         name: formData.name || "",
         email: formData.email || "",
         company: formData.company || "",
@@ -31,6 +33,7 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
       });
     } else {
       setFormValues({
+        plan: "",
         name: "",
         email: "",
         company: "",
@@ -65,13 +68,15 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
       const { id, clientId } = formData;
 
       const formDataToSend = new FormData();
+      formDataToSend.append("plan", formValues.plan);
       formDataToSend.append("name", formValues.name);
       formDataToSend.append("email", formValues.email);
       formDataToSend.append("company", formValues.company);
       formDataToSend.append("description", formValues.description);
       formDataToSend.append("status", formValues.status);
 
-      if (formValues.Link_to_Graphics) {
+      if (formValues.Link_to_Graphics && 
+          !(["SEO Basic", "SEO Standard", "SEO Premium", "Digital Marketing"].includes(formValues.plan))) {
         formDataToSend.append("Link_to_Graphics", formValues.Link_to_Graphics);
       }
 
@@ -117,10 +122,19 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
           style={{ overflowY: "scroll", paddingRight: "20px" }}
           onSubmit={handleSubmit}
         >
+          <Form.Group className="mb-3" controlId="plan">
+            <Form.Label className="custom-text">Plan</Form.Label>
+            <Form.Control
+              type="text"
+              value={formValues.plan}
+              onChange={handleInputChange}
+            />
+          </Form.Group>
+
           <Form.Group className="mb-3" controlId="name">
             <Form.Label className="custom-text">Name</Form.Label>
             <Form.Control
-              type="input"
+              type="text"
               placeholder="Josh Anton"
               autoFocus
               value={formValues.name}
@@ -139,7 +153,7 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
           <Form.Group className="mb-3" controlId="company">
             <Form.Label className="custom-text">Company</Form.Label>
             <Form.Control
-              type="input"
+              type="text"
               placeholder="Company"
               value={formValues.company}
               onChange={handleInputChange}
@@ -148,8 +162,8 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
           <Form.Group className="mb-3" controlId="description">
             <Form.Label className="custom-text">Description</Form.Label>
             <Form.Control
-              type="input"
-              placeholder="Company"
+              type="text"
+              placeholder="Description"
               value={formValues.description}
               onChange={handleInputChange}
             />
@@ -169,14 +183,16 @@ function Modalform({ isOpened, heading, handleClose, formData }) {
             </Form.Select>
           </Form.Group>
 
-          <Form.Group className="mb-3" controlId="Link_to_Graphics">
-            <Form.Label className="custom-text">Upload Link to Graphics</Form.Label>
-            <Form.Control
-              type="file"
-              name="Link_to_Graphics"
-              onChange={handleFileChange}
-            />
-          </Form.Group>
+          {!(["SEO Basic plan", "SEO Standard plan", "SEO Premium plan", "Digital Marketing"].includes(formValues.plan)) && (
+            <Form.Group className="mb-3" controlId="Link_to_Graphics">
+              <Form.Label className="custom-text">Upload Link to Graphics</Form.Label>
+              <Form.Control
+                type="file"
+                name="Link_to_Graphics"
+                onChange={handleFileChange}
+              />
+            </Form.Group>
+          )}
 
           <Modal.Footer>
             <Button

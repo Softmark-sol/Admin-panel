@@ -15,7 +15,7 @@ const Ordertable = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [searchClientId, setSearchClientId] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
@@ -42,9 +42,11 @@ const Ordertable = () => {
           ...web.premium.data,
           ...app.basic.data,
           ...app.standard.data,
-          ...app.premium.data,
-          // ...DigitalMarketing.OnePlane,
+          ...app.premium.data,  
+          ...DigitalMarketing.onePlane,
         ];
+
+        console.log("All Data Combine",combinedData)
 
         setData(combinedData);
         setFilteredData(combinedData);
