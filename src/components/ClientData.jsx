@@ -19,6 +19,7 @@ const ClientData = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
   const [id, setId] = useState();
+  const [loading, setLoading] = useState(true);
 
   const { clientId } = useParams();
 
@@ -32,6 +33,8 @@ const ClientData = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+      console.log(123)
+      setLoading(false)
     };
 
     fetchData();
@@ -245,9 +248,9 @@ const ClientData = () => {
 
   return (
     <div style={{ overflowY: "scroll", height: "88vh" }}>
-      {data == "" ? (
-        <Loader />
-      ) :
+      {loading ?        ( <Loader />)
+:
+      data == "" ? 
       (
         Object.keys(data).map((key) => (
           <div key={key} className="client-main">
@@ -289,30 +292,9 @@ const ClientData = () => {
                       <div onClick={() => handleUpdate(record, record.id)}>
                         <EditButton />
                       </div>
-                      {/* <Button
-                        style={{
-                          backgroundColor: "#74bed7",
-                          color: "white",
-                          border: "none",
-                        }}
-                        onClick={() => handleUpdate(record, record.id)}
-                      >
-                        Update
-                      </Button> */}
-                      <div onClick={() => handleDelete(record.id)} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                    <div onClick={() => handleDelete(record.id)} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
                         <Delete />
-                      </div>
-  
-                      {/* <Button
-                        style={{
-                          backgroundColor: "#74bed7",
-                          color: "white",
-                          border: "none",
-                        }}
-                        onClick={() => handleDelete(record.id)}
-                      >
-                        Delete
-                      </Button> */}
+                      </div>   
                     </div>
                   )}
                 />
@@ -321,6 +303,8 @@ const ClientData = () => {
             </>
           </div>
         ))
+      ):(
+        <Table rowKey="id"></Table>
       )}
       <Modalform
         isOpened={showModal}

@@ -13,6 +13,7 @@ const Ordertable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async (page, pageSize) => {
@@ -36,6 +37,7 @@ const Ordertable = () => {
     };
 
     fetchData(currentPage, pageSize);
+    setLoading(false)
   }, [currentPage, pageSize]);
 
   const formatDate = (dateString) => {
@@ -53,9 +55,11 @@ const Ordertable = () => {
 
   return (
     <div className="responsive">
-      {data == "" ? (
+      {loading?
+      (
         <Loader />
-      ) : (
+      ):
+      data == "" ? (
         <Table
           dataSource={data}
           pagination={{
@@ -84,6 +88,9 @@ const Ordertable = () => {
             render={(text) => formatDate(text)}
           />
         </Table>
+      ):
+      (
+        <Table></Table>
       )}
     </div>
   );

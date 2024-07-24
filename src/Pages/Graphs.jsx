@@ -22,6 +22,7 @@ const BarAndPieCharts = () => {
   const [pieChartData, setPieChartData] = useState([]);
   const [number, setNumber] = useState([]);
   const { apiKey } = API_CONFIG;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,6 +43,7 @@ const BarAndPieCharts = () => {
     };
 
     fetchData();
+    setLoading(false)
   }, []);
 
   const renderCustomizedLabel = ({
@@ -82,9 +84,11 @@ const BarAndPieCharts = () => {
         width: "100%",
       }}
     >
-      {number == "" ? (
-        <Loader />
-      ) : (
+      {loading? (
+                <Loader />
+
+      ):
+      number == "" ?  (
         <>
           <div className="numbers">
             <div className="num1">
@@ -165,6 +169,8 @@ const BarAndPieCharts = () => {
             </div>
           </div>
         </>
+      ):(
+      <p style={{display: "flex", justifyContent: "center", alignItems: "center", fontSize: "1.2rem"}}>No Graphs Availabe!</p>
       )}
     </div>
   );

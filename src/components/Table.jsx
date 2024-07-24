@@ -17,6 +17,7 @@ const Ordertable = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -65,6 +66,7 @@ const Ordertable = () => {
       );
       setFilteredData(filtered);
     }
+    setLoading(false)
   }, [searchClientId, data]);
 
   const handleClientIdClick = (clientId, id) => {
@@ -103,9 +105,11 @@ const Ordertable = () => {
           onChange={(e) => setSearchClientId(e.target.value)}
         />
       </div>
-      {data == "" ? (
-        <Loader />
-      ) : (
+      {
+      loading?
+      (        <Loader />
+      ):
+      data == "" ? (
         <Table
           onChange={handleTableChange}
           dataSource={filteredData}
@@ -175,6 +179,8 @@ const Ordertable = () => {
             dataIndex="Paymentconfirmation"
           />
         </Table>
+      ):(
+        <Table></Table>
       )}
     </div>
   );
