@@ -20,30 +20,48 @@ import Loader from "../components/Loader/Loader";
 const BarAndPieCharts = () => {
   const [barChartData, setBarChartData] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);
-  const [number, setNumber] = useState([]);
+  const [number, setNumber] = useState({});
   const { apiKey } = API_CONFIG;
   const [loading, setLoading] = useState(true);
+
+  const constantBarChartData = [
+    { name: "A", value: 100 },
+    { name: "B", value: 100 },
+    { name: "C", value: 100 },
+  ];
+
+  const constantNumberData = {
+    total: 0,
+    pending: 0,
+    progress: 0,
+    complete: 0,
+    cancel: 0,
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const barChartResponse = await axios.get(`${apiKey}/all-planes-data`);
         const data = barChartResponse.data.data;
-        setNumber(data.counts);
-        const { total, ...countsWithoutTotal } = data.counts;
+        setNumber(data.counts || constantNumberData);
+        const { total, ...countsWithoutTotal } = data.counts || constantNumberData;
         const formattedBarData = Object.keys(countsWithoutTotal).map((key) => ({
           name: key,
           value: countsWithoutTotal[key],
         }));
-        setBarChartData(formattedBarData);
-        setPieChartData(formattedBarData); // Assuming pie chart data structure is similar
+        setBarChartData(formattedBarData.length ? formattedBarData : constantBarChartData);
+        setPieChartData(formattedBarData.length ? formattedBarData : constantBarChartData); // Assuming pie chart data structure is similar
       } catch (error) {
         console.error("Error fetching data:", error);
+        setNumber(constantNumberData);
+        setBarChartData(constantBarChartData);
+        setPieChartData(constantBarChartData);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
-    setLoading(false)
   }, []);
 
   const renderCustomizedLabel = ({
@@ -84,11 +102,9 @@ const BarAndPieCharts = () => {
         width: "100%",
       }}
     >
-      {loading? (
-                <Loader />
-
-      ):
-      number == "" ?  (
+      {loading ? (
+        <Loader />
+      ) : (
         <>
           <div className="numbers">
             <div className="num1">
@@ -130,7 +146,10 @@ const BarAndPieCharts = () => {
                   {/* <Legend /> */}
                   <Bar dataKey="value">
                     {barChartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Bar>
                 </BarChart>
@@ -159,7 +178,10 @@ const BarAndPieCharts = () => {
                     dataKey="value"
                   >
                     {pieChartData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
                     ))}
                   </Pie>
                   <Tooltip />
@@ -169,8 +191,6 @@ const BarAndPieCharts = () => {
             </div>
           </div>
         </>
-      ):(
-      <p style={{display: "flex", justifyContent: "center", alignItems: "center", fontSize: "1.2rem"}}>No Graphs Availabe!</p>
       )}
     </div>
   );

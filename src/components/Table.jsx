@@ -46,17 +46,22 @@ const Ordertable = () => {
           ...DigitalMarketing.onePlane,
         ];
 
-        console.log("All Data Combine",combinedData)
+        console.log("All Data Combine", combinedData)
 
         setData(combinedData);
         setFilteredData(combinedData);
-        setTotal(response.data.data.length);
+        setTotal(combinedData.length);
       } catch (error) {
         console.error("Error fetching data:", error);
+        setData([]);
+        setFilteredData([]);
+        setTotal(0);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchData(currentPage, pageSize);
+    fetchData();
   }, [currentPage, pageSize]);
 
   useEffect(() => {
@@ -68,7 +73,6 @@ const Ordertable = () => {
       );
       setFilteredData(filtered);
     }
-    setLoading(false)
   }, [searchClientId, data]);
 
   const handleClientIdClick = (clientId, id) => {
@@ -107,11 +111,9 @@ const Ordertable = () => {
           onChange={(e) => setSearchClientId(e.target.value)}
         />
       </div>
-      {
-      loading?
-      (        <Loader />
-      ):
-      data == "" ? (
+      {loading ? (
+        <Loader />
+      ) : (
         <Table
           onChange={handleTableChange}
           dataSource={filteredData}
@@ -121,7 +123,7 @@ const Ordertable = () => {
             total: total,
             showSizeChanger: true,
           }}
-          bordered="1px"
+          bordered
         >
           <Column
             title="Order #"
@@ -181,8 +183,6 @@ const Ordertable = () => {
             dataIndex="Paymentconfirmation"
           />
         </Table>
-      ):(
-        <Table></Table>
       )}
     </div>
   );
