@@ -23,16 +23,16 @@ const Router = () => {
           {/* Check Email Page */}
           <Route
             path="/checkemail"
-            element={<Protected Component={Emailbox} />}
+            element={<Emailbox />}
           />
 
           {/* Check Email OTP */}
-          <Route path="/otpform" element={<Protected Component={Otpform} />} />
+          <Route path="/otpform" element={<Otpform />} />
 
           {/* Change Password */}
           <Route
             path="/changepassword"
-            element={<Protected Component={Changepassword} />}
+            element={<Changepassword />}
           />
 
           </Routes>

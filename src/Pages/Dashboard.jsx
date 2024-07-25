@@ -27,7 +27,9 @@ const Dashboard = () => {
             path="/clientdata/:clientId/:id"
             element={<Protected Component={ClientData} />}
           />
-           <Route path="/*" element={<NotFound />} />
+
+            {/* 404 Route */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
       </div>
