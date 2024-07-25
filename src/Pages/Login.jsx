@@ -25,7 +25,7 @@ const LoginForm = () => {
         { username, password }
       );
       if (res) {
-        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("token", res.data.data.token);
         setProgress(100);
         setTimeout(() => {
           navigate("/");

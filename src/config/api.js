@@ -1,17 +1,6 @@
 const API_CONFIG = {
-    apiKey: `https://api.softmarksolutions.com`,
+    apiKey: `http://52.71.145.45:4000`,
 };
   
   export default API_CONFIG;
 
-
-// import dotenv from 'dotenv';
-// dotenv.config();
-
-// const API_CONFIG = {
-//     apiKey: process.env.KEY,
-// };
-
-// export default API_CONFIG;
-
-  
