@@ -35,11 +35,7 @@ const Router = () => {
             element={<Protected Component={Changepassword} />}
           />
 
-          
-
-          {/* 404 Route */}
-          {/* <Route path="*" element={<NotFound />} /> */}
-        </Routes>
+          </Routes>
       </BrowserRouter>
     </>
   );

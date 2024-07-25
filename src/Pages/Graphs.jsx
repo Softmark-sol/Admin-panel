@@ -25,9 +25,10 @@ const BarAndPieCharts = () => {
   const [loading, setLoading] = useState(true);
 
   const constantBarChartData = [
-    { name: "A", value: 100 },
-    { name: "B", value: 100 },
-    { name: "C", value: 100 },
+    { name: "pending", value: 0 },
+    { name: "progress", value: 0 },
+    { name: "complete", value: 0 },
+    { name: "cancel", value: 0 },
   ];
 
   const constantNumberData = {

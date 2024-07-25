@@ -4,10 +4,8 @@ import { Table } from "antd";
 import API_CONFIG from "../config/api";
 import "../css/Orders.css";
 import Loader from "./Loader/Loader";
-
 const { apiKey } = API_CONFIG;
 const { Column } = Table;
-
 const Ordertable = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -27,17 +25,19 @@ const Ordertable = () => {
             },
           }
         );
-        console.log(response);
 
         setData(response.data.data);
         setTotal(response.data.data.length);
       } catch (error) {
         console.error("Error fetching data:", error);
       }
+      finally {
+        setLoading(false);
+        // console.log(process.env.APIKEY)
+      }
     };
 
     fetchData(currentPage, pageSize);
-    setLoading(false)
   }, [currentPage, pageSize]);
 
   const formatDate = (dateString) => {
@@ -56,10 +56,9 @@ const Ordertable = () => {
   return (
     <div className="responsive">
       {loading?
-      (
         <Loader />
-      ):
-      data == "" ? (
+      :
+     (
         <Table
           dataSource={data}
           pagination={{
@@ -88,9 +87,6 @@ const Ordertable = () => {
             render={(text) => formatDate(text)}
           />
         </Table>
-      ):
-      (
-        <Table></Table>
       )}
     </div>
   );

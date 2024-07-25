@@ -8,6 +8,7 @@ import GeneralInquery from "./GeneralInquery";
 import NotFound from "../components/NotFound/NotFound";
 import ClientData from "../components/ClientData";
 import Graphs from "./Graphs";
+import Protected from "../components/Protected/Protected";
 
 const Dashboard = () => {
   return (
@@ -19,17 +20,14 @@ const Dashboard = () => {
         </div>
         <div className="right">
           <Routes>
-            <Route path="/" element={<Graphs />} />
-            <Route path="/general-inquery" element={<GeneralInquery />} />
-            <Route path="/orders" element={<Orders />} />
-            {/* single client data */}
+            <Route path="/" element={<Protected Component={Graphs} />} />
+            <Route path="/general-inquery" element={<Protected Component={GeneralInquery} />} />
+            <Route path="/orders" element={<Protected Component={Orders} />} />
           <Route
             path="/clientdata/:clientId/:id"
-            element={<ClientData />}
+            element={<Protected Component={ClientData} />}
           />
-
-            {/* 404 Route */}
-            {/* <Route path="*" element={<NotFound />} /> */}
+           <Route path="/*" element={<NotFound />} />
           </Routes>
         </div>
       </div>

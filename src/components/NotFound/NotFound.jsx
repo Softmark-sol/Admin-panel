@@ -5,7 +5,7 @@ const NotFound = () => {
   const navigate = useNavigate();
   return (
     <Result
-      style={{ marginTop: "50px" }}
+      // style={{ marginTop: "50px" }}
       status="404"
       title="404"
       subTitle="Sorry, the page you visited does not exist."

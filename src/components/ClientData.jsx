@@ -33,7 +33,9 @@ const ClientData = () => {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-      console.log(123)
+      finally {
+        setLoading(false);
+      }
       setLoading(false)
     };
 
@@ -260,9 +262,8 @@ const ClientData = () => {
 
   return (
     <div style={{ overflowY: "scroll", height: "88vh" }}>
-      {loading ?        ( <Loader />)
+      {loading ?         <Loader />
 :
-      data == "" ? 
       (
         Object.keys(data).map((key) => (
           <div key={key} className="client-main">
@@ -314,8 +315,6 @@ const ClientData = () => {
             </>
           </div>
         ))
-      ):(
-        <Table rowKey="id"></Table>
       )}
       <Modalform
         isOpened={showModal}

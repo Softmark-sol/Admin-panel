@@ -46,7 +46,6 @@ const Ordertable = () => {
           ...DigitalMarketing.onePlane,
         ];
 
-        console.log("All Data Combine", combinedData)
 
         setData(combinedData);
         setFilteredData(combinedData);

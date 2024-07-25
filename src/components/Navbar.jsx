@@ -7,7 +7,7 @@ import API_CONFIG from '../config/api';
 const Navbar = () => {
   const { apiKey } = API_CONFIG;
 
-  const handleLogout = async () => {
+  const handleLogout =  () => {
     try {
       const token = localStorage.getItem("token");
 
@@ -21,7 +21,7 @@ const Navbar = () => {
         }
       };
 
-      const response = await axios.post(`${apiKey}/logout`, {}, config);
+      const response =  axios.post(`${apiKey}/logout`, {}, config);
       
       console.log("Logout successful:", response.data);
 
@@ -41,7 +41,6 @@ const Navbar = () => {
           <h4 className="navbar-h underline">Softmark Solutions</h4>
         </div>
         <div className="btn-container">
-          {/* Logout button with onClick handler */}
           <button onClick={handleLogout}>
             <svg
               height={16}
