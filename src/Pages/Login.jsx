@@ -25,7 +25,6 @@ const LoginForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProgress(50);
-    console.log(username, password);
 
     try {
       const res = await axios.post(
