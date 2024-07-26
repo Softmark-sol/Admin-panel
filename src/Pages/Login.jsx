@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "../css/Login.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -8,12 +8,20 @@ import API_CONFIG from '../config/api';
 
 const LoginForm = () => {
   const { apiKey } = API_CONFIG;
-
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [progress, setProgress] = useState(0);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (inputRef1.current) {
+      inputRef1.current.focus();
+      inputRef1.current.select();
+    }
+  }, []);
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProgress(50);
@@ -52,6 +60,13 @@ const LoginForm = () => {
     }
   };
 
+  const handleKeyDown2 = (event) => {
+    if (event.key === 'Enter') {
+      event.preventDefault(); 
+      inputRef2.current.focus(); 
+    }
+  };
+
   return (
     <div className="form">
       <LoadingBar
@@ -79,8 +94,9 @@ const LoginForm = () => {
             id="username"
             placeholder="Username"
             value={username}
+            ref={inputRef1}
             onChange={(e) => setUsername(e.target.value)}
-            onKeyDown={handleKeyDown}
+            onKeyDown={handleKeyDown2}
             required
           />
         </div>
@@ -102,6 +118,7 @@ const LoginForm = () => {
             id="password"
             placeholder="Password"
             value={password}
+            ref={inputRef2}
             onChange={(e) => setPassword(e.target.value)}
             onKeyDown={handleKeyDown}
             required

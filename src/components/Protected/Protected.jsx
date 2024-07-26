@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import API_CONFIG from "../../config/api";
+import Loader from "../Loader/Loader";
 
 const Protected = ({ Component }) => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const verifyTokenWithBackend = async (token) => {
@@ -27,17 +29,27 @@ const Protected = ({ Component }) => {
           localStorage.removeItem("token");
           navigate("/login");
         }
+        else{
+          setIsAuthenticated(true);
+
+        }
       } catch (error) {
         console.error("Token verification failed", error);
         localStorage.removeItem("token");
         navigate("/login");
       }
     };
+    if (token) {
+      verifyTokenWithBackend(token);
 
-    verifyTokenWithBackend(token);
+    } else {
+      navigate("/login");
+      setIsAuthenticated(true);
+    }
+
   }, [navigate, token]);
 
-  return <Component />;
+  return isAuthenticated ? <Component /> : <Loader />;
 };
 
 export default Protected;
