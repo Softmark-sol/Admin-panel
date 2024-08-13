@@ -198,11 +198,21 @@ const ClientData = () => {
       dataIndex: "Link_to_Graphics",
       key: "Link_to_Graphics",
       width: 150,
-      render: (text) => (
-        <a href={text} target="_blank" rel="noopener noreferrer">
-          {renderValue(text)}
-        </a>
-      ),
+      render: (text) => {
+        let url = text;
+        if (text.startsWith("{") && text.endsWith("}")) {
+          try {
+            url = text.replace(/[{"}]/g, "").trim();
+          } catch (e) {
+            console.error("Error parsing URL:", e);
+          }
+        }
+        return (
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            {renderValue(url)}
+          </a>
+        );
+      },
     },
     {
       title: "Description",
