@@ -4,6 +4,8 @@ import { useNavigate,useLocation } from "react-router-dom";
 import { FaSearchengin } from "react-icons/fa6";
 import { IoBarChartSharp } from "react-icons/io5";
 import "../css/Sidebar.css";
+import { Button } from "@mui/material";
+import UpdatePasswordModal from "./UpdatePasswordModal";
 
 const Sidebar = () => {
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const Sidebar = () => {
           <FaSearchengin color="#C4D7F8" size={20} />
           <span className="sidebar-span">General Inqueries</span>
         </div>    
+        <UpdatePasswordModal />
       </div>
     </div>
   );

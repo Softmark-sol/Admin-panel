@@ -9,6 +9,7 @@ import NotFound from "../components/NotFound/NotFound";
 import ClientData from "../components/ClientData";
 import Graphs from "./Graphs";
 import Protected from "../components/Protected/Protected";
+import UpdatePasswordModal from "../components/UpdatePasswordModal";
 
 const Dashboard = () => {
   return (
@@ -21,12 +22,20 @@ const Dashboard = () => {
         <div className="right">
           <Routes>
             <Route path="/" element={<Protected Component={Graphs} />} />
-            <Route path="/general-inquery" element={<Protected Component={GeneralInquery} />} />
+            <Route
+              path="/general-inquery"
+              element={<Protected Component={GeneralInquery} />}
+            />
             <Route path="/orders" element={<Protected Component={Orders} />} />
-          <Route
-            path="/clientdata/:clientId/:id"
-            element={<Protected Component={ClientData} />}
-          />
+            <Route
+              path="/clientdata/:clientId/:id"
+              element={<Protected Component={ClientData} />}
+            />
+
+            <Route
+              path="/update-password"
+              element={<Protected Component={UpdatePasswordModal} />}
+            />
 
             {/* 404 Route */}
             <Route path="*" element={<NotFound />} />
