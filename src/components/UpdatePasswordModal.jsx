@@ -8,7 +8,6 @@ import {
   CircularProgress,
 } from '@mui/material';
 import axios from 'axios';
-import Swal from 'sweetalert2';
 import API_CONFIG from "../config/api";
 import { showErrorToast, showSuccessToast } from '../components/Toast/Toast';
 
@@ -31,15 +30,12 @@ const UpdatePasswordModal = () => {
     try {
       const res = await axios.post(`${apiKey}/forgot-password`, { email: userEmail });
       if (res.status === 200) {
-        // Swal.fire({ icon: 'success', title: 'Success', text: 'Email sent successfully!' });
         showSuccessToast("Email sent successfully!")
         setStep(2); 
       } else {
-        // Swal.fire({ icon: 'error', title: 'Error', text: 'Invalid Email!' });
         showErrorToast("Invalid Email")
       }
     } catch (error) {
-      // Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong!' });
       showErrorToast("Something went wrong!")
 
     } finally {
@@ -55,12 +51,10 @@ const UpdatePasswordModal = () => {
       if (res.status === 200) {
         setStep(3); 
       } else {
-        // Swal.fire({ icon: 'error', title: 'Error', text: 'Invalid OTP!' });
         showErrorToast("Invalid OTP!")
 
       }
     } catch (error) {
-      // Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong!' });
       showErrorToast("Something went wrong!")
     } finally {
       setLoading(false);
@@ -70,7 +64,6 @@ const UpdatePasswordModal = () => {
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
     if (newPassword !== confirmPassword) {
-      // Swal.fire({ icon: 'error', title: 'Error', text: 'Passwords do not match!' });
       showErrorToast("Passwords do not match!")
 
       return;
@@ -80,13 +73,11 @@ const UpdatePasswordModal = () => {
     try {
       const res = await axios.post(`${apiKey}/reset-password`, { newPassword });
       if (res.status === 200) {
-        // Swal.fire({ icon: 'success', title: 'Success', text: 'Password updated successfully!' });
         showSuccessToast("Password updated successfully!")
 
         handleClose(); 
       }
     } catch (error) {
-      // Swal.fire({ icon: 'error', title: 'Error', text: 'Something went wrong!' });
       showErrorToast("Something went wrong!")
 
     } finally {
