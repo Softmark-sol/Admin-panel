@@ -10,6 +10,7 @@ import ClientData from "../components/ClientData";
 import Graphs from "./Graphs";
 import Protected from "../components/Protected/Protected";
 import UpdatePasswordModal from "../components/UpdatePasswordModal";
+import Settings from "./Settings";
 
 const Dashboard = () => {
   return (
@@ -35,6 +36,11 @@ const Dashboard = () => {
             <Route
               path="/update-password"
               element={<Protected Component={UpdatePasswordModal} />}
+            />
+
+            <Route
+              path="/settings"
+              element={<Protected Component={Settings} />}
             />
 
             {/* 404 Route */}

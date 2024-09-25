@@ -51,7 +51,7 @@ const BarAndPieCharts = () => {
           value: countsWithoutTotal[key],
         }));
         setBarChartData(formattedBarData.length ? formattedBarData : constantBarChartData);
-        setPieChartData(formattedBarData.length ? formattedBarData : constantBarChartData); // Assuming pie chart data structure is similar
+        setPieChartData(formattedBarData.length ? formattedBarData : constantBarChartData); 
       } catch (error) {
         console.error("Error fetching data:", error);
         setNumber(constantNumberData);
@@ -90,7 +90,7 @@ const BarAndPieCharts = () => {
     );
   };
 
-  const COLORS = ["#FFBB28", "#00C49F", "#0088FE", "#FF8042"]; // Different colors for bars and pie sectors
+  const COLORS = ["#FFBB28", "#00C49F", "#0088FE", "#FF8042"]; 
 
   return (
     <div
@@ -107,6 +107,7 @@ const BarAndPieCharts = () => {
         <Loader />
       ) : (
         <>
+       
           <div className="numbers">
             <div className="num1">
               <span>Total: {number.total}</span>
@@ -144,7 +145,6 @@ const BarAndPieCharts = () => {
                   <XAxis dataKey="name" />
                   <YAxis />
                   <Tooltip />
-                  {/* <Legend /> */}
                   <Bar dataKey="value">
                     {barChartData.map((entry, index) => (
                       <Cell
